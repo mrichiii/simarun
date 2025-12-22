@@ -33,9 +33,25 @@
         </div>
     </div>
 
-    <div class="card p-4">
-        <h5 class="card-title">Selamat Datang, Admin</h5>
-        <p class="text-muted">Panel admin untuk manajemen gedung, lantai, ruangan, fasilitas, dan laporan akan dilanjutkan di tahap berikutnya.</p>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h5 class="card-title mb-3">Manajemen Data Dasar</h5>
+                <div class="list-group">
+                    <a href="{{ route('gedung.index') }}" class="list-group-item list-group-item-action">
+                        <strong>📍 Kelola Gedung</strong>
+                        <p class="text-muted small mb-0">Tambah, edit, hapus data gedung</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h5 class="card-title">Selamat Datang, Admin</h5>
+                <p class="text-muted">Fitur tambahan untuk manajemen lantai, ruangan, fasilitas, dan laporan akan dilanjutkan di tahap berikutnya.</p>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
+
