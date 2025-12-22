@@ -35,6 +35,7 @@
                             <td>{{ $item->nama_lantai ?? '-' }}</td>
                             <td>{{ $item->ruangan->count() }} ruangan</td>
                             <td>
+                                <a href="{{ route('ruangan.index', [$gedung->id, $item->id]) }}" class="btn btn-sm btn-info">Ruangan</a>
                                 <a href="{{ route('lantai.edit', [$gedung->id, $item->id]) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('lantai.destroy', [$gedung->id, $item->id]) }}" method="POST" style="display: inline;">
                                     @csrf
