@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\LantaiController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\FasilitasController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,7 +43,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
     Route::put('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}', [RuanganController::class, 'update'])->name('ruangan.update');
     Route::delete('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
+    
+    // Fasilitas Ruangan
+    Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/fasilitas/edit', [FasilitasController::class, 'edit'])->name('fasilitas.edit');
+    Route::put('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/fasilitas', [FasilitasController::class, 'update'])->name('fasilitas.update');
 });
+
 
 
 
