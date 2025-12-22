@@ -21,5 +21,10 @@ class Ruangan extends Model
     {
         return $this->hasOne(Fasilitas::class);
     }
+
+    public function peminjaman()
+    {
+        return $this->hasMany(Peminjaman::class);
+    }
 }
 
