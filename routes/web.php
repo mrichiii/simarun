@@ -6,6 +6,7 @@ use App\Http\Controllers\GedungController;
 use App\Http\Controllers\LantaiController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\FasilitasController;
+use App\Http\Controllers\UserDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -18,7 +19,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routes Protected (hanya untuk user yang sudah login)
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
+    Route::get('/gedung/{gedung_id}', [UserDashboardController::class, 'detailGedung'])->name('user.gedung-detail');
+    Route::get('/ruangan/{ruangan_id}', [UserDashboardController::class, 'detailRuangan'])->name('user.ruangan-detail');
 });
 
 // Routes Admin
