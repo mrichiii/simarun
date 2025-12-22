@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Ruangan;
 
 class AuthController extends Controller
 {
@@ -49,7 +50,15 @@ class AuthController extends Controller
 
     public function adminDashboard()
     {
-        return view('dashboard.admin');
+        $totalRuangan = Ruangan::count();
+        $ruanganTersedia = Ruangan::where('status', 'tersedia')->count();
+        $ruanganTerpakai = Ruangan::where('status', 'tidak_tersedia')->count();
+        $ruanganTidakDapatDipakai = Ruangan::where('status', 'tidak_dapat_dipakai')->count();
+
+        $allRuangan = Ruangan::with('lantai.gedung')->get();
+
+        return view('dashboard.admin', compact('totalRuangan', 'ruanganTersedia', 'ruanganTerpakai', 'ruanganTidakDapatDipakai', 'allRuangan'));
     }
 }
+
 
