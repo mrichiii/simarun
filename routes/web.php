@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\GedungController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,5 +21,9 @@ Route::middleware('auth')->group(function () {
 // Routes Admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AuthController::class, 'adminDashboard'])->name('admin.dashboard');
+    
+    // CRUD Gedung
+    Route::resource('gedung', GedungController::class);
 });
+
 
