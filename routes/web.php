@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GedungController;
 use App\Http\Controllers\LantaiController;
+use App\Http\Controllers\RuanganController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,7 +34,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('gedung/{gedung_id}/lantai/{lantai_id}/edit', [LantaiController::class, 'edit'])->name('lantai.edit');
     Route::put('gedung/{gedung_id}/lantai/{lantai_id}', [LantaiController::class, 'update'])->name('lantai.update');
     Route::delete('gedung/{gedung_id}/lantai/{lantai_id}', [LantaiController::class, 'destroy'])->name('lantai.destroy');
+    
+    // CRUD Ruangan
+    Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
+    Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/create', [RuanganController::class, 'create'])->name('ruangan.create');
+    Route::post('gedung/{gedung_id}/lantai/{lantai_id}/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
+    Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
+    Route::put('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}', [RuanganController::class, 'update'])->name('ruangan.update');
+    Route::delete('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
 });
+
 
 
 
