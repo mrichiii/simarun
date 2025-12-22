@@ -106,6 +106,10 @@
                         <strong>📍 Kelola Gedung</strong>
                         <p class="text-muted small mb-0">Tambah, edit, hapus data gedung</p>
                     </a>
+                    <a href="{{ route('laporan.admin-index') }}" class="list-group-item list-group-item-action">
+                        <strong>📝 Kelola Laporan & Pengaduan</strong>
+                        <p class="text-muted small mb-0">Proses laporan dari user</p>
+                    </a>
                 </div>
             </div>
 

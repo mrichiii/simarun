@@ -59,6 +59,7 @@
     <!-- Quick Action -->
     <div class="mb-4">
         <a href="{{ route('booking.my-bookings') }}" class="btn btn-outline-primary btn-sm">📋 Lihat Peminjaman Saya</a>
+        <a href="{{ route('laporan.index') }}" class="btn btn-outline-danger btn-sm">📝 Laporan & Pengaduan</a>
     </div>
 
     <!-- Info Ruangan Tersedia -->

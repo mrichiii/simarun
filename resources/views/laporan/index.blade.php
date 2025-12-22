@@ -1,0 +1,92 @@
+@extends('layouts.app')
+
+@section('title', 'Laporan Saya')
+
+@section('content')
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="mb-3">
+                <a href="{{ route('dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard</a>
+            </div>
+
+            <div class="card p-4">
+                <h2 class="mb-4">Laporan dan Pengaduan Saya</h2>
+
+                <div class="mb-4">
+                    <a href="{{ route('laporan.create') }}" class="btn btn-primary">➕ Buat Laporan Baru</a>
+                </div>
+
+                @if($laporan->isEmpty())
+                    <div class="alert alert-info">
+                        <strong>Belum ada laporan</strong><br>
+                        Anda belum membuat laporan apapun. <a href="{{ route('laporan.create') }}" class="alert-link">Buat laporan baru sekarang</a>
+                    </div>
+                @else
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Ruangan</th>
+                                    <th>Deskripsi</th>
+                                    <th>Status</th>
+                                    <th>Dibuat</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($laporan as $item)
+                                    <tr>
+                                        <td>
+                                            @if($item->ruangan)
+                                                <strong>{{ $item->ruangan->kode_ruangan }}</strong><br>
+                                                <small class="text-muted">{{ $item->ruangan->nama_ruangan }}</small>
+                                            @else
+                                                <span class="text-muted">-</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <small>{{ Str::limit($item->deskripsi, 50) }}</small>
+                                        </td>
+                                        <td>
+                                            @if($item->status === 'baru')
+                                                <span class="badge bg-info">Baru</span>
+                                            @elseif($item->status === 'diproses')
+                                                <span class="badge bg-warning">Diproses</span>
+                                            @else
+                                                <span class="badge bg-success">Selesai</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ $item->created_at->format('d M Y H:i') }}</small>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm" role="group">
+                                                <a href="{{ route('laporan.show', $item->id) }}" class="btn btn-outline-info">Lihat</a>
+                                                @if($item->status === 'baru')
+                                                    <form action="{{ route('laporan.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus laporan ini?')">Hapus</button>
+                                                    </form>
+                                                @endif
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-muted small mt-3">
+                        <p>Total laporan: <strong>{{ $laporan->count() }}</strong></p>
+                        <p>Baru: <strong>{{ $laporan->where('status', 'baru')->count() }}</strong> | 
+                           Diproses: <strong>{{ $laporan->where('status', 'diproses')->count() }}</strong> | 
+                           Selesai: <strong>{{ $laporan->where('status', 'selesai')->count() }}</strong></p>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

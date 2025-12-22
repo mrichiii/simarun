@@ -8,6 +8,7 @@ use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PeminjamanController;
+use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -30,6 +31,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/booking/store/{ruangan_id}', [PeminjamanController::class, 'store'])->name('booking.store');
     Route::post('/booking/{peminjaman_id}/cancel', [PeminjamanController::class, 'cancel'])->name('booking.cancel');
     Route::put('/booking/{peminjaman_id}/confirm-cancel', [PeminjamanController::class, 'confirmCancel'])->name('booking.confirm-cancel');
+
+    // Routes Laporan User
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/create', [LaporanController::class, 'create'])->name('laporan.create');
+    Route::post('/laporan', [LaporanController::class, 'store'])->name('laporan.store');
+    Route::get('/laporan/{id}', [LaporanController::class, 'show'])->name('laporan.show');
+    Route::delete('/laporan/{id}', [LaporanController::class, 'destroy'])->name('laporan.destroy');
 });
 
 // Routes Admin
@@ -58,6 +66,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Fasilitas Ruangan
     Route::get('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/fasilitas/edit', [FasilitasController::class, 'edit'])->name('fasilitas.edit');
     Route::put('gedung/{gedung_id}/lantai/{lantai_id}/ruangan/{ruangan_id}/fasilitas', [FasilitasController::class, 'update'])->name('fasilitas.update');
+
+    // Laporan Admin
+    Route::get('/admin/laporan', [LaporanController::class, 'adminIndex'])->name('laporan.admin-index');
+    Route::get('/admin/laporan/{id}/edit', [LaporanController::class, 'adminEdit'])->name('laporan.admin-edit');
+    Route::put('/admin/laporan/{id}', [LaporanController::class, 'adminUpdate'])->name('laporan.admin-update');
 });
 
 
