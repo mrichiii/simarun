@@ -137,9 +137,9 @@
             <!-- CTA Booking -->
             @if ($ruangan->status === 'tersedia')
                 <div class="mt-4">
-                    <button class="btn btn-primary btn-lg" disabled>
-                        📅 Fitur Booking akan datang di tahap berikutnya
-                    </button>
+                    <a href="{{ route('booking.create', $ruangan->id) }}" class="btn btn-primary btn-lg">
+                        📅 Buat Peminjaman Ruangan
+                    </a>
                 </div>
             @else
                 <div class="mt-4">

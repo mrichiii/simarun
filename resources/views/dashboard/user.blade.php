@@ -56,6 +56,11 @@
     <h1 class="mb-2">Dashboard Peminjaman Ruangan</h1>
     <p class="text-muted mb-4">Selamat datang, {{ Auth::user()->name }}! Pilih gedung untuk melihat ruangan yang tersedia.</p>
 
+    <!-- Quick Action -->
+    <div class="mb-4">
+        <a href="{{ route('booking.my-bookings') }}" class="btn btn-outline-primary btn-sm">📋 Lihat Peminjaman Saya</a>
+    </div>
+
     <!-- Info Ruangan Tersedia -->
     <div class="mb-4">
         <p>

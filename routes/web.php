@@ -25,11 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/ruangan/{ruangan_id}', [UserDashboardController::class, 'detailRuangan'])->name('user.ruangan-detail');
     
     // Routes Peminjaman
-    Route::get('/booking/peminjaman-saya', [PeminjamanController::class, 'myBookings'])->name('user.peminjaman-saya');
+    Route::get('/booking/my-bookings', [PeminjamanController::class, 'myBookings'])->name('booking.my-bookings');
     Route::get('/booking/create/{ruangan_id}', [PeminjamanController::class, 'create'])->name('booking.create');
     Route::post('/booking/store/{ruangan_id}', [PeminjamanController::class, 'store'])->name('booking.store');
-    Route::get('/booking/{peminjaman_id}/cancel', [PeminjamanController::class, 'cancel'])->name('booking.cancel');
-    Route::post('/booking/{peminjaman_id}/confirm-cancel', [PeminjamanController::class, 'confirmCancel'])->name('booking.confirm-cancel');
+    Route::post('/booking/{peminjaman_id}/cancel', [PeminjamanController::class, 'cancel'])->name('booking.cancel');
+    Route::put('/booking/{peminjaman_id}/confirm-cancel', [PeminjamanController::class, 'confirmCancel'])->name('booking.confirm-cancel');
 });
 
 // Routes Admin

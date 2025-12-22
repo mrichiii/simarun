@@ -77,7 +77,7 @@ class PeminjamanController extends Controller
 
         Peminjaman::create($validated);
 
-        return redirect()->route('user.peminjaman-saya')->with('success', 'Peminjaman ruangan berhasil dibuat');
+        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman ruangan berhasil dibuat');
     }
 
     public function myBookings()
@@ -125,7 +125,7 @@ class PeminjamanController extends Controller
             'alasan_pembatalan' => $validated['alasan_pembatalan'],
         ]);
 
-        return redirect()->route('user.peminjaman-saya')->with('success', 'Peminjaman berhasil dibatalkan');
+        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman berhasil dibatalkan');
     }
 }
 
