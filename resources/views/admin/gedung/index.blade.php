@@ -31,6 +31,7 @@
                             <td>{{ $item->nama_gedung }}</td>
                             <td>{{ $item->lokasi ?? '-' }}</td>
                             <td>
+                                <a href="{{ route('lantai.index', $item->id) }}" class="btn btn-sm btn-info">Lantai</a>
                                 <a href="{{ route('gedung.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('gedung.destroy', $item->id) }}" method="POST" style="display: inline;">
                                     @csrf
