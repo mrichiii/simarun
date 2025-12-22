@@ -73,6 +73,7 @@
                             </td>
                             <td>{{ $item->alasan_tidak_dapat_dipakai ?? '-' }}</td>
                             <td>
+                                <a href="{{ route('fasilitas.edit', [$gedung->id, $lantai->id, $item->id]) }}" class="btn btn-sm btn-success">Fasilitas</a>
                                 <a href="{{ route('ruangan.edit', [$gedung->id, $lantai->id, $item->id]) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('ruangan.destroy', [$gedung->id, $lantai->id, $item->id]) }}" method="POST" style="display: inline;">
                                     @csrf
