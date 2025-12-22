@@ -7,6 +7,7 @@ use App\Http\Controllers\LantaiController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\UserDashboardController;
+use App\Http\Controllers\PeminjamanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [UserDashboardController::class, 'index'])->name('dashboard');
     Route::get('/gedung/{gedung_id}', [UserDashboardController::class, 'detailGedung'])->name('user.gedung-detail');
     Route::get('/ruangan/{ruangan_id}', [UserDashboardController::class, 'detailRuangan'])->name('user.ruangan-detail');
+    
+    // Routes Peminjaman
+    Route::get('/booking/peminjaman-saya', [PeminjamanController::class, 'myBookings'])->name('user.peminjaman-saya');
+    Route::get('/booking/create/{ruangan_id}', [PeminjamanController::class, 'create'])->name('booking.create');
+    Route::post('/booking/store/{ruangan_id}', [PeminjamanController::class, 'store'])->name('booking.store');
+    Route::get('/booking/{peminjaman_id}/cancel', [PeminjamanController::class, 'cancel'])->name('booking.cancel');
+    Route::post('/booking/{peminjaman_id}/confirm-cancel', [PeminjamanController::class, 'confirmCancel'])->name('booking.confirm-cancel');
 });
 
 // Routes Admin
