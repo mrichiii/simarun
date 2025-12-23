@@ -11,7 +11,7 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 // Routes Autentikasi

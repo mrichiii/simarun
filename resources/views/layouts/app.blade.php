@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title') - Sistem Manajemen Ruangan FST</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,31 +13,47 @@
             box-sizing: border-box;
         }
         body {
-            background-color: #f9f9f9;
+            background-color: #f5f7fa;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             color: #333;
+            padding-top: 70px;
+        }
+        body.with-sidebar {
+            margin-left: 280px;
+        }
+        @media (max-width: 991px) {
+            body.with-sidebar {
+                margin-left: 0;
+            }
         }
         .navbar {
             background-color: white;
             border-bottom: 1px solid #e0e0e0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            height: 70px;
         }
         .navbar-brand {
             font-weight: 700;
-            color: #111 !important;
+            color: #1a73e8 !important;
             font-size: 1.3rem;
         }
         .nav-link {
             color: #666 !important;
-            margin-left: 1.5rem;
             transition: color 0.3s;
         }
         .nav-link:hover {
-            color: #111 !important;
+            color: #1a73e8 !important;
         }
         .container-main {
             margin-top: 2rem;
             margin-bottom: 2rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (max-width: 991px) {
+            .container-main {
+                margin-left: 0;
+            }
         }
         .card {
             border: none;
@@ -44,46 +61,21 @@
             border-radius: 8px;
         }
         .btn-primary {
-            background-color: #111;
-            border-color: #111;
+            background-color: #1a73e8;
+            border-color: #1a73e8;
         }
         .btn-primary:hover {
-            background-color: #333;
-            border-color: #333;
+            background-color: #1557c0;
+            border-color: #1557c0;
         }
     </style>
     @yield('css')
 </head>
-<body>
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="/">📍 Manajemen Ruangan FST</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    @auth
-                        <li class="nav-item">
-                            <span class="nav-link">{{ Auth::user()->name }}</span>
-                        </li>
-                        <li class="nav-item">
-                            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
-                                @csrf
-                                <button type="submit" class="btn btn-link nav-link" style="text-decoration: none;">Logout</button>
-                            </form>
-                        </li>
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
-                        </li>
-                    @endauth
-                </ul>
-            </div>
-        </div>
-    </nav>
+<body @auth class="with-sidebar" @endauth>
+    @include('components.navbar')
+    @include('components.sidebar')
 
-    <div class="container-main">
+    <div class="container-main container-lg">
         @if ($errors->any())
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 <strong>Error!</strong>
