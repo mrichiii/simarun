@@ -69,6 +69,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Laporan Admin
     Route::get('/admin/laporan', [LaporanController::class, 'adminIndex'])->name('laporan.admin-index');
+    Route::get('/admin/laporan/export', [LaporanController::class, 'exportPdf'])->name('laporan.export-pdf');
     Route::get('/admin/laporan/{id}/edit', [LaporanController::class, 'adminEdit'])->name('laporan.admin-edit');
     Route::put('/admin/laporan/{id}', [LaporanController::class, 'adminUpdate'])->name('laporan.admin-update');
 });

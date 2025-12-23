@@ -10,8 +10,14 @@
                 <a href="{{ route('admin.dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard Admin</a>
             </div>
 
-            <div class="card p-4 mb-4">
-                <h2 class="mb-4">Kelola Laporan dan Pengaduan</h2>
+            <div class="card p-4 mb-4 d-flex justify-content-between align-items-start">
+                <div>
+                    <h2 class="mb-4">Kelola Laporan dan Pengaduan</h2>
+                </div>
+                <div>
+                    <a href="{{ route('laporan.export-pdf') }}" class="btn btn-sm btn-outline-secondary">⬇️ Export PDF</a>
+                </div>
+            </div>
 
                 <!-- Statistik -->
                 <div class="row mb-4">

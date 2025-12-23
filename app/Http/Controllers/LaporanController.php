@@ -7,6 +7,7 @@ use App\Models\Laporan;
 use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -87,6 +88,14 @@ class LaporanController extends Controller
         ];
 
         return view('laporan.admin-index', compact('laporan', 'stats'));
+    }
+
+    // Admin: Export laporan ke PDF
+    public function exportPdf()
+    {
+        $laporan = Laporan::with('user', 'ruangan')->orderBy('created_at', 'desc')->get();
+        $pdf = PDF::loadView('laporan.pdf', compact('laporan'));
+        return $pdf->download('laporan_pengaduan.pdf');
     }
 
     // Admin: Edit laporan (untuk menambah catatan)
