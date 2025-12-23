@@ -12,27 +12,54 @@ class AuthController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return Auth::user()->role === 'admin' ? redirect('/admin/dashboard') : redirect('/dashboard');
+            return Auth::user()->role === 'admin' ? redirect()->route('admin.dashboard') : redirect()->route('dashboard');
         }
-        return view('auth.login');
+
+        $type = request()->query('type', 'nim');
+        return view('auth.login', compact('type'));
     }
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+        // Support explicit form type: 'nim' (mahasiswa without password) or 'email' (email+password)
+        $type = $request->input('type');
+
+        if ($type === 'nim') {
+            $request->validate([
+                'login' => 'required|numeric|max_digits:10',
+            ]);
+
+            $input = $request->input('login');
+            $user = User::where('nim', $input)->first();
+
+            if ($user && $user->role === 'user') {
+                Auth::login($user);
+                $request->session()->regenerate();
+                return redirect()->route('dashboard');
+            }
+
+            return back()->withErrors([
+                'login' => 'NIM tidak terdaftar atau tidak memiliki akses mahasiswa',
+            ])->onlyInput('login');
+        }
+
+        // Default: email + password login (admin or other users)
+        $request->validate([
+            'login' => 'required|email',
             'password' => 'required|string'
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $input = $request->input('login');
+
+        if (Auth::attempt(['email' => $input, 'password' => $request->password])) {
             $request->session()->regenerate();
             $user = Auth::user();
-            return $user->role === 'admin' ? redirect('/admin/dashboard') : redirect('/dashboard');
+            return $user->role === 'admin' ? redirect()->route('admin.dashboard') : redirect()->route('dashboard');
         }
 
         return back()->withErrors([
-            'email' => 'Email atau password salah',
-        ])->onlyInput('email');
+            'login' => 'Email atau password salah',
+        ])->onlyInput('login');
     }
 
     public function logout(Request $request)
@@ -57,7 +84,7 @@ class AuthController extends Controller
 
         $allRuangan = Ruangan::with('lantai.gedung')->get();
 
-        return view('dashboard.admin', compact('totalRuangan', 'ruanganTersedia', 'ruanganTerpakai', 'ruanganTidakDapatDipakai', 'allRuangan'));
+        return view('admin.admin', compact('totalRuangan', 'ruanganTersedia', 'ruanganTerpakai', 'ruanganTidakDapatDipakai', 'allRuangan'));
     }
 }
 

@@ -7,16 +7,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root{
+            --bg: #f4f4f4;
+            --text: #111111;
+            --muted: #666666;
+            --green: #2c7113;
+            --green-600: #224914;
+            --yellow: #f59e0b;
+            --surface: #f8faf6; /* very light green/white */
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         body {
-            background-color: #f5f7fa;
+            background-color: var(--bg);
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            color: #333;
-            padding-top: 70px;
+            color: var(--text);
         }
         body.with-sidebar {
             margin-left: 280px;
@@ -27,22 +36,22 @@
             }
         }
         .navbar {
-            background-color: white;
-            border-bottom: 1px solid #e0e0e0;
+            background-color: var(--bg);
+            border-bottom: 1px solid #e9ecef;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             height: 70px;
         }
         .navbar-brand {
             font-weight: 700;
-            color: #1a73e8 !important;
+            color: var(--text) !important;
             font-size: 1.3rem;
         }
         .nav-link {
-            color: #666 !important;
+            color: var(--muted) !important;
             transition: color 0.3s;
         }
         .nav-link:hover {
-            color: #1a73e8 !important;
+            color: var(--green) !important;
         }
         .container-main {
             margin-top: 2rem;
@@ -61,12 +70,12 @@
             border-radius: 8px;
         }
         .btn-primary {
-            background-color: #1a73e8;
-            border-color: #1a73e8;
+            background: linear-gradient(135deg, var(--green), var(--green-600));
+            border-color: var(--green-600);
+            color: white;
         }
         .btn-primary:hover {
-            background-color: #1557c0;
-            border-color: #1557c0;
+            filter: brightness(0.95);
         }
     </style>
     @yield('css')

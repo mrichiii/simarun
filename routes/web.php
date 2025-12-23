@@ -9,6 +9,7 @@ use App\Http\Controllers\FasilitasController;
 use App\Http\Controllers\UserDashboardController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\LaporanController;
+use App\Http\Controllers\MahasiswaController;
 
 Route::get('/', function () {
     return view('home');
@@ -72,6 +73,16 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/laporan/export', [LaporanController::class, 'exportPdf'])->name('laporan.export-pdf');
     Route::get('/admin/laporan/{id}/edit', [LaporanController::class, 'adminEdit'])->name('laporan.admin-edit');
     Route::put('/admin/laporan/{id}', [LaporanController::class, 'adminUpdate'])->name('laporan.admin-update');
+
+    // Manajemen Mahasiswa
+    Route::resource('admin/mahasiswa', MahasiswaController::class)->names([
+        'index' => 'admin.mahasiswa.index',
+        'create' => 'admin.mahasiswa.create',
+        'store' => 'admin.mahasiswa.store',
+        'edit' => 'admin.mahasiswa.edit',
+        'update' => 'admin.mahasiswa.update',
+        'destroy' => 'admin.mahasiswa.destroy',
+    ]);
 });
 
 

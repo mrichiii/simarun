@@ -15,29 +15,32 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f0f9f7 0%, #f5f5f5 100%);
             min-height: 100vh;
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid #e9ecef;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 90px;
         }
 
         .navbar-brand {
             font-weight: 800;
             font-size: 1.5rem;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: #000 !important;
         }
 
         .hero-section {
             min-height: 90vh;
             display: flex;
             align-items: center;
+            background: linear-gradient(135deg, #2c7113 0%, #224914 100%);
             color: white;
             position: relative;
             overflow: hidden;
@@ -53,7 +56,7 @@
             background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,.1)" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,144C960,149,1056,139,1152,128C1248,117,1344,107,1392,101.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
             background-repeat: no-repeat;
             background-size: cover;
-            opacity: 0.5;
+            opacity: 0.3;
         }
 
         .hero-content {
@@ -66,7 +69,8 @@
             font-weight: 800;
             margin-bottom: 1.5rem;
             line-height: 1.2;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            color: white;
         }
 
         .hero-subtitle {
@@ -74,6 +78,7 @@
             margin-bottom: 2rem;
             opacity: 0.95;
             font-weight: 300;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .btn-hero {
@@ -88,13 +93,13 @@
 
         .btn-primary-hero {
             background: white;
-            color: #667eea;
+            color: #2c7113;
         }
 
         .btn-primary-hero:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            color: #667eea;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            color: #224914;
         }
 
         .btn-secondary-hero {
@@ -105,7 +110,7 @@
 
         .btn-secondary-hero:hover {
             background: white;
-            color: #667eea;
+            color: #2c7113;
             transform: translateY(-3px);
         }
 
@@ -117,18 +122,18 @@
         }
 
         .feature-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(135deg, #f0fdf4 0%, #e0f7ee 100%);
             border-radius: 20px;
             padding: 40px 30px;
             text-align: center;
             transition: all 0.3s ease;
-            border: none;
+            border: 1px solid #d1fae5;
             height: 100%;
         }
 
         .feature-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
         }
 
         .feature-icon {
@@ -138,7 +143,7 @@
             width: 80px;
             height: 80px;
             line-height: 80px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #2c7113, #224914);
             color: white;
             border-radius: 50%;
             transition: all 0.3s ease;
@@ -152,7 +157,7 @@
             font-size: 1.5rem;
             font-weight: 700;
             margin-bottom: 1rem;
-            color: #333;
+            color: #1a1a1a;
         }
 
         .feature-description {
@@ -161,7 +166,7 @@
         }
 
         .stats-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #2c7113 0%, #224914 100%);
             padding: 60px 0;
             color: white;
             text-align: center;
@@ -175,11 +180,13 @@
             font-size: 3rem;
             font-weight: 800;
             margin-bottom: 10px;
+            color: white;
         }
 
         .stat-label {
             font-size: 1.1rem;
-            opacity: 0.9;
+            opacity: 0.95;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .cta-section {
@@ -192,7 +199,7 @@
             font-size: 2.5rem;
             font-weight: 800;
             margin-bottom: 2rem;
-            color: #333;
+            color: #1a1a1a;
         }
 
         .cta-description {
@@ -202,7 +209,7 @@
         }
 
         .footer {
-            background: #1a1a1a;
+            background: #1f2937;
             color: white;
             padding: 40px 0;
             text-align: center;
@@ -213,7 +220,7 @@
         }
 
         .nav-btn:hover {
-            color: #667eea !important;
+            color: #2c7113 !important;
             transform: translateY(-2px);
         }
 
@@ -246,10 +253,10 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" style="background: rgba(255, 255, 255, 0.98); box-shadow: 0 2px 8px rgba(0,0,0,0.08); border-bottom: 1px solid #e9ecef; position: sticky; top: 0; z-index: 1000;">
         <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-building" style="margin-right: 10px;"></i>SIPBWL FST
+            <a class="navbar-brand" href="/" style="color: #000 !important;">
+                <i class="fas fa-building" style="margin-right: 10px; color: #2c7113;"></i>SIPBWL FST
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -258,23 +265,27 @@
                 <ul class="navbar-nav ms-auto">
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link nav-btn" href="/dashboard">
-                                <i class="fas fa-chart-line" style="margin-right: 8px;"></i>Dashboard
+                            <a class="nav-link nav-btn" href="/dashboard" style="color: #333;">
+                                <i class="fas fa-chart-line" style="margin-right: 8px; color: #000;"></i>Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
                             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                                 @csrf
-                                <button type="submit" class="btn btn-outline-primary btn-sm nav-btn">
-                                    <i class="fas fa-sign-out-alt" style="margin-right: 6px;"></i>Logout
+                                <button type="submit" class="btn btn-outline-secondary btn-sm nav-btn">
+                                    <i class="fas fa-sign-out-alt" style="margin-right: 6px; color: #666;"></i>Logout
                                 </button>
                             </form>
                         </li>
                     @else
-                        <li class="nav-item">
-                            <a class="nav-link nav-btn" href="{{ route('login') }}">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle nav-btn" href="#" role="button" data-bs-toggle="dropdown" style="color: #2c7113;">
                                 <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Login
                             </a>
+                            <ul class="dropdown-menu dropdown-menu-end border-0" style="box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                                <li><a class="dropdown-item" href="{{ route('login', ['type' => 'nim']) }}">Login Mahasiswa</a></li>
+                                <li><a class="dropdown-item" href="{{ route('login', ['type' => 'email']) }}">Login Admin</a></li>
+                            </ul>
                         </li>
                     @endauth
                 </ul>
@@ -284,6 +295,7 @@
 
     <!-- Hero Section -->
     <section class="hero-section">
+        <div class="container">
         <div class="container-fluid position-relative" style="z-index: 2;">
             <div class="row align-items-center" style="min-height: 90vh;">
                 <div class="col-lg-6 hero-content">
@@ -295,11 +307,11 @@
                                 <i class="fas fa-arrow-right" style="margin-right: 8px;"></i>Ke Dashboard
                             </a>
                         @else
-                            <a href="{{ route('login') }}" class="btn btn-hero btn-primary-hero">
-                                <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i>Mulai Sekarang
+                            <a href="{{ route('login', ['type' => 'nim']) }}" class="btn btn-hero btn-primary-hero">
+                                <i class="fas fa-user-graduate" style="margin-right: 8px;"></i>Login Mahasiswa
                             </a>
-                            <a href="{{ route('login') }}" class="btn btn-hero btn-secondary-hero">
-                                <i class="fas fa-info-circle" style="margin-right: 8px;"></i>Pelajari Lebih Lanjut
+                            <a href="{{ route('login', ['type' => 'email']) }}" class="btn btn-hero btn-secondary-hero">
+                                <i class="fas fa-shield-alt" style="margin-right: 8px;"></i>Login Admin
                             </a>
                         @endauth
                     </div>
@@ -310,6 +322,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </section>
 
@@ -399,13 +412,13 @@
             <h2 class="cta-title">Siap Memulai?</h2>
             <p class="cta-description">Bergabunglah dengan sistem manajemen ruangan terbaru di Gedung FST</p>
             @auth
-                <a href="/dashboard" class="btn btn-lg" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 50px; border-radius: 50px; font-weight: 700; text-decoration: none;">
+                <a href="/dashboard" class="btn btn-lg" style="background: linear-gradient(135deg, #2c7113, #224914); color: white; padding: 15px 50px; border-radius: 50px; font-weight: 700; text-decoration: none;">
                     <i class="fas fa-arrow-right" style="margin-right: 10px;"></i>Buka Dashboard
                 </a>
-            @else
-                <a href="{{ route('login') }}" class="btn btn-lg" style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 15px 50px; border-radius: 50px; font-weight: 700; text-decoration: none;">
-                    <i class="fas fa-sign-in-alt" style="margin-right: 10px;"></i>Login Sekarang
-                </a>
+                @else
+                    <a href="{{ route('login', ['type' => 'nim']) }}" class="btn btn-lg" style="background: linear-gradient(135deg, #2c7113, #224914); color: white; padding: 15px 50px; border-radius: 50px; font-weight: 700; text-decoration: none;">
+                        <i class="fas fa-sign-in-alt" style="margin-right: 10px;"></i>Login Mahasiswa
+                    </a>
             @endauth
         </div>
     </section>

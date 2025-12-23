@@ -5,7 +5,7 @@
 @section('css')
 <style>
     .stat-card {
-        background: white;
+        background: #ffffff;
         border-radius: 8px;
         padding: 1.5rem;
         text-align: center;
