@@ -7,9 +7,21 @@ use App\Models\Gedung;
 
 class GedungController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $gedung = Gedung::all();
+        $query = Gedung::query();
+
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function($sub) use ($q) {
+                $sub->where('nama_gedung', 'like', "%{$q}%")
+                    ->orWhere('kode_gedung', 'like', "%{$q}%")
+                    ->orWhere('lokasi', 'like', "%{$q}%");
+            });
+        }
+
+        $gedung = $query->orderBy('id', 'desc')->get();
+
         return view('admin.gedung.index', compact('gedung'));
     }
 

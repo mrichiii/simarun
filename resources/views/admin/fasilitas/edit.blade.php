@@ -9,7 +9,7 @@
     </div>
 
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card p-4">
                 <h2 class="mb-4">Edit Fasilitas Ruangan</h2>
 
@@ -31,7 +31,7 @@
                     <hr class="my-4">
 
                     <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3" style="background: #fafafa; padding: 15px;">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" name="ac" id="ac" value="1" {{ $fasilitas->ac ? 'checked' : '' }}>
                                 <label class="form-check-label" for="ac">
@@ -39,7 +39,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3" style="background: #fafafa; padding: 15px;">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" name="proyektor" id="proyektor" value="1" {{ $fasilitas->proyektor ? 'checked' : '' }}>
                                 <label class="form-check-label" for="proyektor">
@@ -47,10 +47,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3" style="background: #fafafa; padding: 15px;">
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" name="papan_tulis" id="papan_tulis" value="1" {{ $fasilitas->papan_tulis ? 'checked' : '' }}>
                                 <label class="form-check-label" for="papan_tulis">

@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="mb-3">
                 <a href="{{ route('laporan.index') }}" class="text-decoration-none text-muted">← Kembali</a>
             </div>

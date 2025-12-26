@@ -19,11 +19,11 @@ class BookingTest extends TestCase
     {
         parent::setUp();
         // buat struktur gedung->lantai->ruangan
-        $this->gedung = Gedung::create(['kode_gedung' => 'FST', 'nama_gedung' => 'FST', 'lokasi' => 'Kampus']);
+        $this->gedung = Gedung::create(['kode_gedung' => '', 'nama_gedung' => '', 'lokasi' => 'Kampus']);
         $this->lantai = Lantai::create(['gedung_id' => $this->gedung->id, 'nomor_lantai' => 1, 'nama_lantai' => 'Lantai 1']);
         $this->ruangan = Ruangan::create([
             'lantai_id' => $this->lantai->id,
-            'kode_ruangan' => 'FST-101',
+            'kode_ruangan' => '-101',
             'nama_ruangan' => 'Ruang A',
             'status' => 'tersedia'
         ]);
@@ -79,7 +79,7 @@ class BookingTest extends TestCase
         $user = User::factory()->create();
         $ruangan2 = Ruangan::create([
             'lantai_id' => $this->lantai->id,
-            'kode_ruangan' => 'FST-102',
+            'kode_ruangan' => '-102',
             'nama_ruangan' => 'Ruang B',
             'status' => 'tersedia'
         ]);

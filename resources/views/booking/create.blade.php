@@ -5,7 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="mb-3">
                 <a href="{{ route('user.ruangan-detail', $ruangan->id) }}" class="text-decoration-none text-muted">← Kembali</a>
             </div>
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="alert alert-info">
-                        <strong>⚠️ Perhatian:</strong>
+                        <strong><i class="fas fa-info-circle"></i> Perhatian:</strong>
                         <ul class="mb-0 mt-2">
                             <li>Pastikan jadwal tidak bertabrakan dengan peminjaman lain</li>
                             <li>Anda tidak bisa meminjam ruangan pada waktu yang sama untuk 2 ruangan berbeda</li>

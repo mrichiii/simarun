@@ -3,14 +3,6 @@
 @section('title', 'Kelola Mahasiswa')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold" style="color: #333;">
-        <i class="fas fa-users me-2" style="color: var(--green);"></i>Kelola Mahasiswa
-    </h2>
-    <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-primary" style="border: none;">
-        <i class="fas fa-plus me-2"></i>Tambah Mahasiswa
-    </a>
-</div>
 
 @if (session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -20,6 +12,24 @@
 @endif
 
 <div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="fw-bold" style="color: #2c7113;">Kelola Mahasiswa</h1>
+        <a href="{{ route('admin.mahasiswa.create') }}" class="btn btn-primary" style="border: none;">
+        <i class="fas fa-plus me-2"></i>Tambah Mahasiswa</a>
+    </div>
+
+    {{-- Filter form --}}
+    <form method="GET" action="{{ route('admin.mahasiswa.index') }}" class="row g-2 mb-4">
+        <div class="col-md-12">
+            <input type="text" name="q" value="{{ request('q') }}" class="form-control" placeholder="Cari nama, NIM, atau email...">
+        </div>
+        <div class="col-6 mb-2">
+            <button type="submit" class="btn btn-warning w-100">Filter</button>
+        </div>
+        <div class="col-6">
+            <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-secondary w-100">Reset</a>
+        </div>
+    </form>
     <div class="table-responsive" style="border-radius: 12px;">
         <table class="table mb-0">
             <thead style="background: #f8f9fa; border-bottom: 2px solid #e9ecef;">
@@ -57,7 +67,7 @@
                                 <form action="{{ route('admin.mahasiswa.destroy', $item->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-warning" style="padding: 5px 12px; background: var(--yellow); border-color: var(--yellow);" onclick="return confirm('Yakin ingin menghapus?')">
+                                    <button type="submit" class="btn btn-sm btn-danger" style="padding: 5px 12px;" onclick="return confirm('Yakin ingin menghapus?')">
                                         <i class="fas fa-trash"></i> Hapus
                                     </button>
                                 </form>

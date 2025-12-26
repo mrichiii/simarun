@@ -80,12 +80,23 @@ class PeminjamanController extends Controller
         return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman ruangan berhasil dibuat');
     }
 
-    public function myBookings()
+    public function myBookings(Request $request)
     {
-        $peminjaman = Peminjaman::where('user_id', Auth::id())
-            ->with('ruangan.lantai.gedung')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = Peminjaman::where('user_id', Auth::id())->with('ruangan.lantai.gedung');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->whereHas('ruangan', function($r) use ($q) {
+                $r->where('kode_ruangan', 'like', "%{$q}%")
+                  ->orWhere('nama_ruangan', 'like', "%{$q}%");
+            });
+        }
+
+        $peminjaman = $query->orderBy('created_at', 'desc')->get();
 
         return view('booking.my-bookings', compact('peminjaman'));
     }

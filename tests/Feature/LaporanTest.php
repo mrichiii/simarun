@@ -21,9 +21,9 @@ class LaporanTest extends TestCase
         Storage::fake('public');
 
         $user = User::factory()->create();
-        $gedung = Gedung::create(['kode_gedung' => 'FST','nama_gedung' => 'FST','lokasi'=>'Kampus']);
+        $gedung = Gedung::create(['kode_gedung' => '','nama_gedung' => '','lokasi'=>'Kampus']);
         $lantai = Lantai::create(['gedung_id' => $gedung->id, 'nomor_lantai' => 1, 'nama_lantai' => 'L1']);
-        $ruangan = Ruangan::create(['lantai_id'=>$lantai->id,'kode_ruangan'=>'FST-201','nama_ruangan'=>'R201','status'=>'tersedia']);
+        $ruangan = Ruangan::create(['lantai_id'=>$lantai->id,'kode_ruangan'=>'-201','nama_ruangan'=>'R201','status'=>'tersedia']);
 
         $this->actingAs($user);
 

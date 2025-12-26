@@ -39,7 +39,7 @@
         background-color: white;
         padding: 1rem;
         border-radius: 6px;
-        border-left: 4px solid #111;
+        border-left: 4px solid #2c7113;
     }
     .fasilitas-icon {
         font-size: 1.5rem;

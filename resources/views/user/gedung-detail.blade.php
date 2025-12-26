@@ -31,17 +31,14 @@
         box-shadow: 0 6px 12px rgba(0,0,0,0.15);
     }
     .grid-item.tersedia {
-        background-color: #28a745;
-    }
-    .grid-item.tersedia:hover {
-        border-color: #1e7e34;
+        background: linear-gradient(135deg,#2c7113,#224914);
     }
     .grid-item.tidak_tersedia {
-        background-color: #ffc107;
-        color: #333;
+        background: linear-gradient(135deg,#ffa200,#d29201);
+        color: #0a0a0a;
     }
     .grid-item.tidak_dapat_dipakai {
-        background-color: #dc3545;
+        background: linear-gradient(135deg,#383737,#0a0a0a);
     }
     .lantai-section {
         margin-bottom: 3rem;
@@ -65,7 +62,7 @@
         <div class="alert alert-info">Belum ada lantai di gedung ini</div>
     @else
         @foreach ($lantai as $l)
-            <div class="lantai-section">
+            <div class="lantai-section" style="border-block: 1px solid #9aa0a6;">
                 <h4 class="mb-3">Lantai {{ $l->nomor_lantai }} {{ $l->nama_lantai ? '- ' . $l->nama_lantai : '' }}</h4>
 
                 @if ($l->ruangan->isEmpty())
@@ -81,22 +78,22 @@
                         @endforeach
                     </div>
 
-                    <div class="row mt-4 pt-2" style="border-top: 1px solid #ddd;">
+                    <div class="row mt-4 pt-2" style="border-top: 1px solid #9aa0a6;">
                         <div class="col-md-3">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 16px; height: 16px; background-color: #28a745; border-radius: 3px;"></div>
+                                <div style="width: 16px; height: 16px; background-color: #2c7113; border-radius: 3px;"></div>
                                 <span style="font-size: 0.85rem;">Tersedia</span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 16px; height: 16px; background-color: #ffc107; border-radius: 3px;"></div>
+                                <div style="width: 16px; height: 16px; background-color: #d29201; border-radius: 3px;"></div>
                                 <span style="font-size: 0.85rem;">Terpakai</span>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 16px; height: 16px; background-color: #dc3545; border-radius: 3px;"></div>
+                                <div style="width: 16px; height: 16px; background-color: #0a0a0a; border-radius: 3px;"></div>
                                 <span style="font-size: 0.85rem;">Tidak Dapat Dipakai</span>
                             </div>
                         </div>

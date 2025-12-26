@@ -9,14 +9,15 @@
         border-radius: 8px;
         padding: 1.5rem;
         text-align: center;
-        border-left: 4px solid #111;
+        border-left: 4px solid #2c7113;
     }
     .stat-card h6 {
-        color: #999;
+        color: #0a0a0a;
         font-size: 0.9rem;
         margin-bottom: 0.5rem;
     }
     .stat-card h2 {
+        color: #0a0a0a;
         margin: 0;
         font-size: 2.5rem;
         font-weight: 700;
@@ -46,14 +47,14 @@
         box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     }
     .grid-item.tersedia {
-        background-color: #28a745;
+        background-color: #2c7113;
     }
     .grid-item.tidak_tersedia {
-        background-color: #ffc107;
+        background-color: #d29201;
         color: #333;
     }
     .grid-item.tidak_dapat_dipakai {
-        background-color: #dc3545;
+        background-color: #0a0a0a;
     }
     .section-title {
         font-size: 1.1rem;
@@ -66,30 +67,44 @@
 
 @section('content')
 <div class="container-fluid">
-    <h1 class="mb-4">Admin Dashboard</h1>
+    <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-weight: 800; color: #2c7113;">Admin Dashboard</h1>
+    </div>
+        
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card p-4 mb-4">
+                <h5 class="card-title mb-3"><i class="fas fa-circle-exclamation" style="color: #2c7113"></i> Informasi</h5>
+                <p class="text-muted small">Selamat datang di panel administrasi Sistem Informasi Manajemen Ruangan.
+                Gunakan menu di samping untuk mengelola data gedung, lantai, ruangan, fasilitas, dan laporan.
+                Melalui sistem ini, administrator dapat melakukan pengelolaan data secara terpusat dan terstruktur guna memastikan informasi ruangan selalu akurat dan terkini. 
+                Setiap perubahan data akan langsung tersimpan di dalam sistem sehingga memudahkan proses monitoring.</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Statistik Ringkas -->
-    <div class="row mb-5">
+    <div class="row mb-4">
         <div class="col-md-3">
-            <div class="stat-card">
+            <div class="stat-card" style="border-left-color: #0a0a0a;">
                 <h6>Ruangan Tersedia</h6>
                 <h2>{{ $ruanganTersedia }}</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="stat-card" style="border-left-color: #ffc107;">
+            <div class="stat-card" style="border-left-color: #d29201;">
                 <h6>Ruangan Terpakai</h6>
                 <h2>{{ $ruanganTerpakai }}</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="stat-card" style="border-left-color: #dc3545;">
+            <div class="stat-card" style="border-left-color: #2c7113;">
                 <h6>Tidak Dapat Dipakai</h6>
                 <h2>{{ $ruanganTidakDapatDipakai }}</h2>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="stat-card" style="border-left-color: #666;">
+            <div class="stat-card" style="border-left-color: #666666;">
                 <h6>Total Ruangan</h6>
                 <h2>{{ $totalRuangan }}</h2>
             </div>
@@ -97,26 +112,10 @@
     </div>
 
     <div class="row">
-        <div class="col-md-9">
-            <!-- Manajemen Cepat -->
-            <div class="card p-4 mb-4">
-                <h5 class="card-title mb-3">Manajemen Data</h5>
-                <div class="list-group">
-                    <a href="/gedung" class="list-group-item list-group-item-action">
-                        <strong>📍 Kelola Gedung</strong>
-                        <p class="text-muted small mb-0">Tambah, edit, hapus data gedung</p>
-                    </a>
-                    <a href="{{ route('laporan.admin-index') }}" class="list-group-item list-group-item-action">
-                        <strong>📝 Kelola Laporan & Pengaduan</strong>
-                        <p class="text-muted small mb-0">Proses laporan dari user</p>
-                    </a>
-                </div>
-            </div>
-
+        <div class="col-md-12">
             <!-- Grid Visual Ruangan -->
             <div class="card p-4">
-                <h5 class="card-title mb-3">Visualisasi Status Ruangan (Semua Gedung)</h5>
-                <p class="text-muted small">Klik untuk melihat detail ruangan</p>
+                <h5 class="card-title mb-3" style="text-align: center">Visualisasi Status Ruangan (Semua Gedung)</h5>
 
                 @if ($allRuangan->isEmpty())
                     <div class="alert alert-info">Belum ada ruangan yang terdaftar</div>
@@ -132,31 +131,24 @@
                     <div class="row mt-4 pt-3" style="border-top: 1px solid #eee;">
                         <div class="col-md-4">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 20px; height: 20px; background-color: #28a745; border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 20px; background-color: #2c7113; border-radius: 4px;"></div>
                                 <span>Tersedia</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 20px; height: 20px; background-color: #ffc107; border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 20px; background-color: #d29201; border-radius: 4px;"></div>
                                 <span>Terpakai</span>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <div style="width: 20px; height: 20px; background-color: #dc3545; border-radius: 4px;"></div>
+                                <div style="width: 20px; height: 20px; background-color: #0a0a0a; border-radius: 4px;"></div>
                                 <span>Tidak Dapat Dipakai</span>
                             </div>
                         </div>
                     </div>
                 @endif
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card p-4">
-                <h5 class="card-title">Informasi</h5>
-                <p class="text-muted small">Selamat datang di panel administrasi Sistem Informasi Manajemen Ruangan Gedung FST.</p>
-                <p class="text-muted small">Gunakan menu di atas untuk mengelola data gedung, lantai, ruangan, fasilitas, dan laporan.</p>
             </div>
         </div>
     </div>

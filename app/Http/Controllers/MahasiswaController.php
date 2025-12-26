@@ -7,9 +7,20 @@ use App\Models\User;
 
 class MahasiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $mahasiswa = User::where('role', 'user')->get();
+        $query = User::where('role', 'user');
+
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function($sub) use ($q) {
+                $sub->where('name', 'like', "%{$q}%")
+                    ->orWhere('nim', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%");
+            });
+        }
+
+        $mahasiswa = $query->orderBy('name')->get();
         return view('admin.mahasiswa.index', compact('mahasiswa'));
     }
 

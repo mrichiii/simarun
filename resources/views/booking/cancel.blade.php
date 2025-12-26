@@ -5,16 +5,12 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="mb-3">
-                <a href="{{ route('booking.my-bookings') }}" class="text-decoration-none text-muted">← Kembali</a>
-            </div>
-
+        <div class="col-md-12">
             <div class="card p-4">
                 <h2 class="mb-3">Batalkan Peminjaman</h2>
 
                 <div class="alert alert-warning">
-                    <strong>⚠️ Konfirmasi Pembatalan</strong><br>
+                    <strong><i class="fas fa-exclamation-triangle"></i> Konfirmasi Pembatalan</strong><br>
                     Anda akan membatalkan peminjaman ruangan berikut:
                 </div>
 

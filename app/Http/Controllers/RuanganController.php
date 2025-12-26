@@ -19,11 +19,29 @@ class RuanganController extends Controller
         return $gedung->kode_gedung . '-' . $lantai->nomor_lantai . str_pad($nomorUrt, 2, '0', STR_PAD_LEFT);
     }
 
-    public function index($gedung_id, $lantai_id)
+    public function index(Request $request, $gedung_id, $lantai_id)
     {
         $gedung = Gedung::findOrFail($gedung_id);
         $lantai = Lantai::where('id', $lantai_id)->where('gedung_id', $gedung_id)->firstOrFail();
-        $ruangan = Ruangan::where('lantai_id', $lantai_id)->get();
+
+        $query = Ruangan::where('lantai_id', $lantai_id);
+
+        // filter by status
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        // search by kode or nama
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function($sub) use ($q) {
+                $sub->where('nama_ruangan', 'like', "%{$q}%")
+                    ->orWhere('kode_ruangan', 'like', "%{$q}%");
+            });
+        }
+
+        $ruangan = $query->orderBy('id', 'desc')->get();
+
         return view('admin.ruangan.index', compact('gedung', 'lantai', 'ruangan'));
     }
 
@@ -89,5 +107,17 @@ class RuanganController extends Controller
 
         return redirect()->route('ruangan.index', [$gedung_id, $lantai_id])->with('success', 'Ruangan berhasil dihapus');
     }
-}
 
+    // Admin method untuk menampilkan semua ruangan dari semua gedung
+    public function adminIndex()
+    {
+        $ruangan = Ruangan::with('lantai.gedung')->orderBy('id', 'desc')->get();
+        return view('admin.ruangan.admin-index', compact('ruangan'));
+    }
+
+    // Admin method untuk menampilkan semua ruangan untuk manage fasilitas
+    public function adminFasilitasIndex()
+    {
+        $ruangan = Ruangan::with('lantai.gedung')->orderBy('id', 'desc')->get();
+        return view('admin.fasilitas.admin-index', compact('ruangan'));
+    }}

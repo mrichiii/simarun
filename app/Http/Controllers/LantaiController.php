@@ -8,10 +8,21 @@ use App\Models\Gedung;
 
 class LantaiController extends Controller
 {
-    public function index($gedung_id)
+    public function index(Request $request, $gedung_id)
     {
         $gedung = Gedung::findOrFail($gedung_id);
-        $lantai = Lantai::where('gedung_id', $gedung_id)->orderBy('nomor_lantai')->get();
+
+        $query = Lantai::where('gedung_id', $gedung_id);
+
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function($sub) use ($q) {
+                $sub->where('nama_lantai', 'like', "%{$q}%")
+                    ->orWhere('nomor_lantai', 'like', "%{$q}%");
+            });
+        }
+
+        $lantai = $query->orderBy('nomor_lantai')->get();
         return view('admin.lantai.index', compact('gedung', 'lantai'));
     }
 
@@ -69,5 +80,13 @@ class LantaiController extends Controller
 
         return redirect()->route('lantai.index', $gedung_id)->with('success', 'Lantai berhasil dihapus');
     }
+
+    // Admin method untuk menampilkan semua lantai dari semua gedung
+    public function adminIndex()
+    {
+        $lantai = Lantai::with('gedung')->orderBy('gedung_id')->orderBy('nomor_lantai')->get();
+        return view('admin.lantai.admin-index', compact('lantai'));
+    }
 }
+
 

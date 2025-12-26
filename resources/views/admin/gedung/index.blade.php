@@ -5,8 +5,9 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>Data Gedung</h1>
-        <a href="{{ route('gedung.create') }}" class="btn btn-primary">+ Tambah Gedung</a>
+        <h1 class="fw-bold" style="color: #2c7113;">Data Gedung</h1>
+        <a href="{{ route('gedung.create') }}" class="btn btn-primary" style="border: none;">
+        <i class="fas fa-plus me-2"></i>Tambah Gedung</a>
     </div>
 
     @if ($gedung->isEmpty())
@@ -14,9 +15,9 @@
             <p>Belum ada data gedung. <a href="{{ route('gedung.create') }}">Tambah gedung sekarang</a></p>
         </div>
     @else
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-light">
+        <div class="table-responsive" style="border-radius: 12px;">
+            <table class="table mb-0">
+                <thead style="background: #f8f9fa; border-bottom: 2px solid #e9ecef;">
                     <tr>
                         <th>Kode Gedung</th>
                         <th>Nama Gedung</th>
@@ -31,7 +32,7 @@
                             <td>{{ $item->nama_gedung }}</td>
                             <td>{{ $item->lokasi ?? '-' }}</td>
                             <td>
-                                <a href="{{ route('lantai.index', $item->id) }}" class="btn btn-sm btn-info">Lantai</a>
+                                <a href="{{ route('lantai.index', $item->id) }}" class="btn btn-sm btn-primary">Lantai</a>
                                 <a href="{{ route('gedung.edit', $item->id) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('gedung.destroy', $item->id) }}" method="POST" style="display: inline;">
                                     @csrf

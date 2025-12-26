@@ -75,11 +75,26 @@ class LaporanController extends Controller
     }
 
     // Admin: Lihat semua laporan
-    public function adminIndex()
+    public function adminIndex(Request $request)
     {
-        $laporan = Laporan::with('user', 'ruangan')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $query = Laporan::with('user', 'ruangan');
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('q')) {
+            $q = $request->input('q');
+            $query->where(function($sub) use ($q) {
+                $sub->whereHas('user', function($u) use ($q) {
+                    $u->where('name', 'like', "%{$q}%")->orWhere('email', 'like', "%{$q}%");
+                })->orWhereHas('ruangan', function($r) use ($q) {
+                    $r->where('kode_ruangan', 'like', "%{$q}%")->orWhere('nama_ruangan', 'like', "%{$q}%");
+                })->orWhere('deskripsi', 'like', "%{$q}%");
+            });
+        }
+
+        $laporan = $query->orderBy('created_at', 'desc')->get();
 
         $stats = [
             'baru' => $laporan->where('status', 'baru')->count(),

@@ -5,12 +5,6 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="">
-        <div class="mb-4">
-            <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-outline-secondary">
-                <i class="fas fa-arrow-left me-2"></i>Kembali
-            </a>
-        </div>
-
         <div class="card" style="border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.1);">
             <div class="card-body p-4">
                 <h3 class="fw-bold mb-4" style="color: #333;">
@@ -35,25 +29,28 @@
                            <input type="text" class="form-control @error('nim') is-invalid @enderror" 
                                id="nim" name="nim" value="{{ old('nim') }}" 
                                placeholder="Contoh: 0702231043" maxlength="10" required style="border-radius: 8px;">
-                           <small class="text-muted d-block mt-2">NIM harus numerik (maksimal 10 digit). Mahasiswa login hanya menggunakan NIM tanpa password.</small>
+                           <small class="text-muted d-block mt-2">NIM harus numerik (maksimal 10 digit).</small>
                         @error('nim')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-primary fw-600 py-2" style="border-radius: 8px;">
+                    <div class="d-flex justify-content-center gap-2">
+                        <button type="submit" class="btn btn-primary w-100" style="border-radius: 8px;">
                             <i class="fas fa-plus me-2"></i>Tambah Mahasiswa
                         </button>
+                        <a href="{{ route('admin.mahasiswa.index') }}" class="btn btn-secondary w-100" style="border-radius: 8px;">
+                            <i class="fas fa-arrow-left me-2"></i>Kembali
+                        </a>
                     </div>
                 </form>
 
                 <hr class="my-4">
-                <div class="alert" role="alert" style="background: var(--surface); border: 1px solid rgba(16,185,129,0.12); border-radius: 8px;">
+                <div class="alert" role="alert" style="background: var(----green); border: 1px solid rgba(0, 255, 170, 0.12); border-radius: 8px;">
                     <i class="fas fa-info-circle me-2" style="color: var(--green);"></i>
                     <strong>Informasi:</strong>
-                    <ul class="mb-0 mt-2" style="font-size: 0.9rem; color: #555;">
-                        <li>Email otomatis akan dibuat dengan format: <code>mahasiswa_[NIM]@student.uinsu.ac.id</code></li>
+                    <ul class="mb-0 mt-2" style="font-size: 0.9rem; color: #0a0a0a;">
+                        <li>Email otomatis akan dibuat dengan format: <code style="color:#0a0a0a">mahasiswa_[NIM]@student.uinsu.ac.id</code></li>
                         <li><strong>Login mahasiswa hanya menggunakan NIM, tanpa password</strong></li>
                         <li>Pastikan NIM yang diinput valid dan unik</li>
                     </ul>

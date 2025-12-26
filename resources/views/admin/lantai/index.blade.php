@@ -7,10 +7,10 @@
     <div class="mb-3">
         <a href="{{ route('gedung.index') }}" class="text-decoration-none text-muted">← Kembali ke Data Gedung</a>
     </div>
-
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1>{{ $gedung->nama_gedung }} - Data Lantai</h1>
-        <a href="{{ route('lantai.create', $gedung->id) }}" class="btn btn-primary">+ Tambah Lantai</a>
+        <h1 class="fw-bold" style="color: #2c7113;">{{ $gedung->nama_gedung }} - Data Lantai</h1>
+        <a href="{{ route('lantai.create', $gedung->id) }}" class="btn btn-primary" style="border: none;">
+        <i class="fas fa-plus me-2"></i>Tambah Lantai</a>
     </div>
 
     @if ($lantai->isEmpty())
@@ -19,8 +19,8 @@
         </div>
     @else
         <div class="table-responsive">
-            <table class="table table-hover">
-                <thead class="table-light">
+            <table class="table mb-0">
+                <thead style="background: #f8f9fa; border-bottom: 2px solid #e9ecef;">
                     <tr>
                         <th>Nomor Lantai</th>
                         <th>Nama Lantai</th>
@@ -35,7 +35,7 @@
                             <td>{{ $item->nama_lantai ?? '-' }}</td>
                             <td>{{ $item->ruangan->count() }} ruangan</td>
                             <td>
-                                <a href="{{ route('ruangan.index', [$gedung->id, $item->id]) }}" class="btn btn-sm btn-info">Ruangan</a>
+                                <a href="{{ route('ruangan.index', [$gedung->id, $item->id]) }}" class="btn btn-sm btn-primary">Ruangan</a>
                                 <a href="{{ route('lantai.edit', [$gedung->id, $item->id]) }}" class="btn btn-sm btn-warning">Edit</a>
                                 <form action="{{ route('lantai.destroy', [$gedung->id, $item->id]) }}" method="POST" style="display: inline;">
                                     @csrf

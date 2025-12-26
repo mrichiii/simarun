@@ -6,22 +6,44 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="mb-3">
-                <a href="{{ route('user.dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard</a>
+                <div class="mb-3">
+                	<a href="{{ route('dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard</a>
+                </div>
+            <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold" style="color: #2c7113;">Riwayat Peminjaman Saya</h1>
             </div>
 
-            <div class="card p-4">
-                <h2 class="mb-4">Riwayat Peminjaman Saya</h2>
+                {{-- Filter --}}
+                <form method="GET" action="{{ route('booking.my-bookings') }}" class="row g-2 mb-4">
+                    <div class="col-md-6">
+                        <input type="text" name="q" value="{{ request('q') }}" class="form-control" placeholder="Cari kode atau nama ruangan...">
+                    </div>
+                    <div class="col-md-6">
+                        <select name="status" class="form-select">
+                            <option value="">Semua Status</option>
+                            <option value="aktif" {{ request('status') == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                            <option value="selesai" {{ request('status') == 'selesai' ? 'selected' : '' }}>Selesai</option>
+                            <option value="dibatalkan" {{ request('status') == 'dibatalkan' ? 'selected' : '' }}>Dibatalkan</option>
+                        </select>
+                    </div>
+                    <div class="col-6 mb-2">
+                        <button type="submit" class="btn btn-warning w-100">Filter</button>
+                    </div>
+                    <div class="col-6">
+                        <a href="{{{ route('booking.my-bookings') }}}" class="btn btn-secondary w-100">Reset</a>
+                    </div>
+                </form>
 
                 @if($peminjaman->isEmpty())
                     <div class="alert alert-info">
                         <strong>Belum ada riwayat peminjaman</strong><br>
-                        <a href="{{ route('user.dashboard') }}" class="alert-link">Lihat ruangan yang tersedia</a>
+                        <a href="{{ route('dashboard') }}" class="alert-link">Lihat ruangan yang tersedia</a>
                     </div>
                 @else
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="table-light">
+                        <table class="table m-0">
+                            <thead>
                                 <tr>
                                     <th>Ruangan</th>
                                     <th>Jam Masuk</th>
@@ -51,12 +73,12 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <a href="{{ route('user.ruangan-detail', $item->ruangan->id) }}" class="btn btn-outline-info">Lihat</a>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="{{ route('user.ruangan-detail', $item->ruangan->id) }}" class="btn btn-warning">Lihat</a>
                                                 @if($item->status === 'aktif')
                                                     <form action="{{ route('booking.cancel', $item->id) }}" method="POST" style="display: inline;">
                                                         @csrf
-                                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin membatalkan peminjaman ini?')">Batalkan</button>
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin membatalkan peminjaman ini?')">Batalkan</button>
                                                     </form>
                                                 @endif
                                             </div>

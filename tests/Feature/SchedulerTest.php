@@ -18,9 +18,9 @@ class SchedulerTest extends TestCase
 
     public function test_scheduler_marks_peminjaman_selesai_and_updates_ruangan()
     {
-        $gedung = Gedung::create(['kode_gedung' => 'FST','nama_gedung' => 'FST','lokasi'=>'Kampus']);
+        $gedung = Gedung::create(['kode_gedung' => '','nama_gedung' => '','lokasi'=>'Kampus']);
         $lantai = Lantai::create(['gedung_id' => $gedung->id, 'nomor_lantai' => 1, 'nama_lantai' => 'L1']);
-        $ruangan = Ruangan::create(['lantai_id'=>$lantai->id,'kode_ruangan'=>'FST-301','nama_ruangan'=>'R301','status'=>'tidak_tersedia']);
+        $ruangan = Ruangan::create(['lantai_id'=>$lantai->id,'kode_ruangan'=>'-301','nama_ruangan'=>'R301','status'=>'tidak_tersedia']);
 
         $user = User::factory()->create();
 

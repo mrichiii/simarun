@@ -5,11 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="mb-3">
-                <a href="{{ route('laporan.index') }}" class="text-decoration-none text-muted">← Kembali</a>
-            </div>
-
+        <div class="col-md-12">
             <div class="card p-4">
                 <h2 class="mb-4">Buat Laporan Ruangan</h2>
 
@@ -53,8 +49,8 @@
                         @enderror
                     </div>
 
-                    <div class="alert alert-info">
-                        <strong>ℹ️ Informasi:</strong>
+                    <div class="alert alert-success" role="alert">
+                        <strong><i class="fas fa-info-circle me-2"></i>Informasi</strong>
                         <ul class="mb-0 mt-2">
                             <li>Sertakan deskripsi yang jelas dan detail</li>
                             <li>Anda bisa melampirkan foto bukti untuk mempercepat proses</li>

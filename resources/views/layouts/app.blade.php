@@ -3,17 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@yield('title') - Sistem Manajemen Ruangan FST</title>
+    <title>@yield('title') - Sistem Manajemen Ruangan </title>
+    <link rel="icon" style="border-radius: 50%" type="image/png+xml" href="{{ asset('logo2.png') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root{
-            --bg: #f4f4f4;
-            --text: #111111;
+            --bg: #fafafa;
+            --text: #0a0a0a;
             --muted: #666666;
             --green: #2c7113;
             --green-600: #224914;
-            --yellow: #f59e0b;
+            --yellow: #ffa200;
+            --yellow-600: #d29201;
             --surface: #f8faf6; /* very light green/white */
         }
 
@@ -36,7 +38,7 @@
             }
         }
         .navbar {
-            background-color: var(--bg);
+            background-color: #ffffff;
             border-bottom: 1px solid #e9ecef;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             height: 70px;
@@ -77,12 +79,52 @@
         .btn-primary:hover {
             filter: brightness(0.95);
         }
+        .btn-warning {
+            background: linear-gradient(135deg, var(--yellow), var(--yellow-600));
+            border-color: var(--yellow-600);
+            color: #000000;
+        }
+        .btn-warning:hover {
+            filter: brightness(0.95);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #e01c30, #a00d1b);
+            border-color: #e01c30;
+            color: white;
+        }
+        .btn-danger:hover {
+            filter: brightness(0.95);
+        }
+        .btn-secondary {
+            background: linear-gradient(135deg, #6c757d, #2e3236);
+            border-color: #6c757d;
+            color: white;
+        }
+        .btn-secondary:hover {
+            filter: brightness(0.95);
+        }
+        .container {
+            color: var(--text);
+        }
+        .table-responsive {
+            border-block: 2px solid #9aa0a6;
+            border-radius: 12px;
+        }
+        .thead {
+            background: #f8f9fa; 
+            border-bottom: 2px solid #e9ecef;
+        }
     </style>
     @yield('css')
 </head>
 <body @auth class="with-sidebar" @endauth>
-    @include('components.navbar')
-    @include('components.sidebar')
+    @if (!request()->routeIs('login'))
+        @include('components.navbar')
+    @endif
+
+    @auth
+        @include('components.sidebar')
+    @endauth
 
     <div class="container-main container-lg">
         @if ($errors->any())

@@ -6,16 +6,15 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <div class="mb-3">
-                <a href="{{ route('dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard</a>
-            </div>
-
-            <div class="card p-4">
-                <h2 class="mb-4">Laporan dan Pengaduan Saya</h2>
-
-                <div class="mb-4">
-                    <a href="{{ route('laporan.create') }}" class="btn btn-primary">➕ Buat Laporan Baru</a>
+                <div class="mb-3">
+                	<a href="{{ route('dashboard') }}" class="text-decoration-none text-muted">← Kembali ke Dashboard</a>
                 </div>
+            <div class="card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="fw-bold" style="color: #2c7113;">Laporan dan Pengaduan Saya</h1>
+                <a href="{{ route('laporan.create') }}" class="btn btn-primary" style="border: none;">
+                <i class="fas fa-plus"></i> Laporan Baru</a>
+            </div>
 
                 @if($laporan->isEmpty())
                     <div class="alert alert-info">
@@ -24,8 +23,8 @@
                     </div>
                 @else
                     <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead class="table-light">
+                        <table class="table m-0">
+                            <thead>
                                 <tr>
                                     <th>Ruangan</th>
                                     <th>Deskripsi</th>
@@ -40,7 +39,6 @@
                                         <td>
                                             @if($item->ruangan)
                                                 <strong>{{ $item->ruangan->kode_ruangan }}</strong><br>
-                                                <small class="text-muted">{{ $item->ruangan->nama_ruangan }}</small>
                                             @else
                                                 <span class="text-muted">-</span>
                                             @endif
@@ -61,13 +59,13 @@
                                             <small class="text-muted">{{ $item->created_at->format('d M Y H:i') }}</small>
                                         </td>
                                         <td>
-                                            <div class="btn-group btn-group-sm" role="group">
-                                                <a href="{{ route('laporan.show', $item->id) }}" class="btn btn-outline-info">Lihat</a>
+                                            <div class="d-flex justify-content-center gap-2">
+                                                <a href="{{ route('laporan.show', $item->id) }}" class="btn btn-warning" style="padding: 5px 12px;">Lihat</a>
                                                 @if($item->status === 'baru')
                                                     <form action="{{ route('laporan.destroy', $item->id) }}" method="POST" style="display: inline;">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="btn btn-outline-danger" onclick="return confirm('Yakin ingin menghapus laporan ini?')">Hapus</button>
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Yakin ingin menghapus laporan ini?')">Hapus</button>
                                                     </form>
                                                 @endif
                                             </div>
@@ -85,6 +83,7 @@
                            Selesai: <strong>{{ $laporan->where('status', 'selesai')->count() }}</strong></p>
                     </div>
                 @endif
+            </div>
             </div>
         </div>
     </div>

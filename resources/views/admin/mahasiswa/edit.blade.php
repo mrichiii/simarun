@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="d-grid gap-2">
-                        <button type="submit" class="btn btn-warning fw-600 py-2" style="border-radius: 8px; background: var(--yellow); border-color: var(--yellow); color: #111;">
+                        <button type="submit" class="btn btn-warning fw-600 py-2" style="border-radius: 8px; background: var(--yellow); border-color: var(--yellow); color: #2c7113;">
                             <i class="fas fa-save me-2"></i>Simpan Perubahan
                         </button>
                     </div>

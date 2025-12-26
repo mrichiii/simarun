@@ -5,11 +5,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="mb-3">
-                <a href="{{ route('laporan.admin-index') }}" class="text-decoration-none text-muted">← Kembali</a>
-            </div>
-
+        <div class="col-md-12">
             <div class="card p-4">
                 <h2 class="mb-1">Proses Laporan</h2>
                 <p class="text-muted mb-4">dari {{ $laporan->user->name }} ({{ $laporan->user->email }})</p>
@@ -25,7 +21,7 @@
                             <strong>Dibuat:</strong> {{ $laporan->created_at->format('d M Y H:i') }}<br>
                             <strong>Status Saat Ini:</strong>
                             @if($laporan->status === 'baru')
-                                <span class="badge bg-info">Baru</span>
+                                <span class="badge bg-danger">Baru</span>
                             @elseif($laporan->status === 'diproses')
                                 <span class="badge bg-warning">Diproses</span>
                             @else
