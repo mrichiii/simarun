@@ -11,6 +11,7 @@ use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RuanganStatusController;
 
 use Illuminate\Http\Request;
 use App\Models\Gedung;
@@ -120,6 +121,24 @@ Route::middleware(['auth', 'admin'])->group(function () {
         'update' => 'admin.mahasiswa.update',
         'destroy' => 'admin.mahasiswa.destroy',
     ]);
+});
+
+// ============================================
+// API Routes untuk Real-Time Status Ruangan
+// ============================================
+// Tidak perlu authentication untuk status endpoint (read-only)
+Route::prefix('api')->group(function () {
+    // Endpoint untuk mendapatkan status real-time satu ruangan
+    Route::get('/ruangan/{ruangan_id}/status', [RuanganStatusController::class, 'getStatus']);
+    
+    // Endpoint untuk mendapatkan status multiple ruangan
+    Route::post('/ruangan/status/bulk', [RuanganStatusController::class, 'getBulkStatus']);
+    
+    // Endpoint untuk cek ketersediaan ruangan di jam-jam tertentu
+    Route::get('/ruangan/available', [RuanganStatusController::class, 'getAvailableRooms']);
+    
+    // Endpoint debug untuk testing
+    Route::get('/ruangan/{ruangan_id}/debug', [RuanganStatusController::class, 'debug']);
 });
 
 

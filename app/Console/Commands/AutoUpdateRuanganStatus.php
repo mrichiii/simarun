@@ -28,35 +28,37 @@ class AutoUpdateRuanganStatus extends Command
      */
     public function handle()
     {
-        $currentTime = Carbon::now()->format('H:i');
-        
-        // Ambil semua peminjaman yang masih aktif
-        $activePeminjaman = Peminjaman::where('status', 'aktif')->get();
-        
+        $now = Carbon::now(config('app.timezone'));
+        $nowTime = $now->toTimeString(); // HH:MM:SS
+
+        // Ambil peminjaman aktif yang jam_keluar <= sekarang (sudah lewat atau sama)
+        $toFinish = Peminjaman::where('status', 'aktif')
+            ->whereTime('jam_keluar', '<=', $nowTime)
+            ->get();
+
         $updated = 0;
-        
-        foreach ($activePeminjaman as $peminjaman) {
-            // Jika jam_keluar sudah lewat, ubah status menjadi selesai
-            if ($currentTime >= $peminjaman->jam_keluar) {
-                $peminjaman->update(['status' => 'selesai']);
-                
-                // Update status ruangan kembali ke tersedia jika tidak ada peminjaman lain
-                $ruangan = $peminjaman->ruangan;
-                $hasOtherActive = Peminjaman::where('ruangan_id', $ruangan->id)
-                    ->where('status', 'aktif')
-                    ->exists();
-                
-                if (!$hasOtherActive && $ruangan->status === 'tidak_tersedia') {
-                    $ruangan->update([
-                        'status' => 'tersedia',
-                        'dosen_pengampu' => null,
-                        'jam_masuk' => null,
-                        'jam_keluar' => null,
-                    ]);
-                }
-                
-                $updated++;
+
+        foreach ($toFinish as $peminjaman) {
+            // Tandai peminjaman selesai
+            $peminjaman->update(['status' => 'selesai']);
+
+            // Periksa apakah masih ada peminjaman aktif lain untuk ruangan ini
+            $ruangan = $peminjaman->ruangan;
+            $hasOtherActive = Peminjaman::where('ruangan_id', $ruangan->id)
+                ->where('status', 'aktif')
+                ->exists();
+
+            if (!$hasOtherActive && $ruangan->status === 'tidak_tersedia') {
+                // Reset informasi penggunaan ruangan
+                $ruangan->update([
+                    'status' => 'tersedia',
+                    'dosen_pengampu' => null,
+                    'jam_masuk' => null,
+                    'jam_keluar' => null,
+                ]);
             }
+
+            $updated++;
         }
         
         if ($updated > 0) {

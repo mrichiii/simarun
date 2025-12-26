@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Peminjaman;
 use App\Models\Ruangan;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class PeminjamanController extends Controller
 {
@@ -13,8 +14,9 @@ class PeminjamanController extends Controller
     {
         $ruangan = Ruangan::findOrFail($ruangan_id);
         
-        if ($ruangan->status !== 'tersedia') {
-            return redirect()->back()->with('error', 'Ruangan tidak tersedia untuk peminjaman');
+        // Cek status real-time, bukan status database
+        if ($ruangan->getStatusRealTimeAttribute() !== 'tersedia') {
+            return redirect()->back()->with('error', 'Ruangan tidak tersedia untuk peminjaman pada saat ini');
         }
 
         return view('booking.create', compact('ruangan'));
@@ -26,9 +28,13 @@ class PeminjamanController extends Controller
 
         $validated = $request->validate([
             'dosen_pengampu' => 'required|string|max:255',
+            // Make tanggal_peminjaman optional for backward compatibility; default to today if missing
+            'tanggal_peminjaman' => 'nullable|date_format:Y-m-d|after_or_equal:today',
             'jam_masuk' => 'required|date_format:H:i',
             'jam_keluar' => 'required|date_format:H:i|after:jam_masuk',
         ], [
+            'tanggal_peminjaman.date_format' => 'Format tanggal harus YYYY-MM-DD',
+            'tanggal_peminjaman.after_or_equal' => 'Tanggal peminjaman harus hari ini atau setelahnya',
             'jam_masuk.required' => 'Jam masuk harus diisi',
             'jam_masuk.date_format' => 'Format jam harus HH:MM',
             'jam_keluar.required' => 'Jam keluar harus diisi',
@@ -37,47 +43,75 @@ class PeminjamanController extends Controller
             'dosen_pengampu.required' => 'Nama dosen pengampu harus diisi',
         ]);
 
+        // Konversi ke datetime format
+        // Jika user tidak mengisi tanggal, gunakan tanggal hari ini (backward compatibility)
+        $tanggal = $request->input('tanggal_peminjaman', Carbon::now(config('app.timezone'))->format('Y-m-d'));
+        $jam_masuk = $validated['jam_masuk'];
+        $jam_keluar = $validated['jam_keluar'];
+
+        $tanggal_jam_masuk = Carbon::createFromFormat(
+            'Y-m-d H:i',
+            "$tanggal $jam_masuk",
+            config('app.timezone')
+        );
+        
+        $tanggal_jam_keluar = Carbon::createFromFormat(
+            'Y-m-d H:i',
+            "$tanggal $jam_keluar",
+            config('app.timezone')
+        );
+
         // Cek overlap dengan peminjaman aktif ruangan yang sama
+        // Menggunakan datetime columns untuk akurasi penuh
+        // Hanya cek booking aktif atau yang belum lewat waktu keluar
         $overlap = Peminjaman::where('ruangan_id', $ruangan_id)
             ->where('status', 'aktif')
-            ->where(function ($query) use ($validated) {
-                $query->whereBetween('jam_masuk', [$validated['jam_masuk'], $validated['jam_keluar']])
-                    ->orWhereBetween('jam_keluar', [$validated['jam_masuk'], $validated['jam_keluar']])
-                    ->orWhere(function ($q) use ($validated) {
-                        $q->where('jam_masuk', '<=', $validated['jam_masuk'])
-                          ->where('jam_keluar', '>=', $validated['jam_keluar']);
-                    });
+            ->where('tanggal_jam_keluar', '>', now()) // Hanya yang belum lewat waktu keluar
+            ->where(function ($query) use ($tanggal_jam_masuk, $tanggal_jam_keluar) {
+                // Ada booking yang overlap dengan slot waktu yang diminta
+                $query->where('tanggal_jam_masuk', '<', $tanggal_jam_keluar)
+                      ->where('tanggal_jam_keluar', '>', $tanggal_jam_masuk);
             })
             ->exists();
 
         if ($overlap) {
-            return back()->withErrors(['jam_masuk' => 'Waktu yang dipilih bentrok dengan peminjaman lain'])->withInput();
+            return back()->withErrors(['jam_masuk' => 'Waktu yang dipilih bentrok dengan peminjaman lain. Silakan pilih waktu lain.'])->withInput();
         }
 
-        // Cek overlap peminjaman user itu sendiri
+        // Cek apakah pengguna sudah memiliki peminjaman aktif yang belum berakhir
+        // Persyaratan: satu nim hanya boleh meminjam 1 ruangan sekaligus
+        // Hanya cek booking aktif atau yang belum lewat waktu keluar
         $userOverlap = Peminjaman::where('user_id', Auth::id())
             ->where('status', 'aktif')
-            ->where(function ($query) use ($validated) {
-                $query->whereBetween('jam_masuk', [$validated['jam_masuk'], $validated['jam_keluar']])
-                    ->orWhereBetween('jam_keluar', [$validated['jam_masuk'], $validated['jam_keluar']])
-                    ->orWhere(function ($q) use ($validated) {
-                        $q->where('jam_masuk', '<=', $validated['jam_masuk'])
-                          ->where('jam_keluar', '>=', $validated['jam_keluar']);
-                    });
+            ->where('tanggal_jam_keluar', '>', now()) // Hanya yang belum lewat waktu keluar
+            ->where(function ($query) use ($tanggal_jam_masuk, $tanggal_jam_keluar) {
+                // Overlap dengan waktu booking yang baru diminta
+                $query->where('tanggal_jam_masuk', '<', $tanggal_jam_keluar)
+                      ->where('tanggal_jam_keluar', '>', $tanggal_jam_masuk);
             })
             ->exists();
 
         if ($userOverlap) {
-            return back()->withErrors(['jam_masuk' => 'Anda sudah memiliki peminjaman pada waktu yang sama'])->withInput();
+            return back()->withErrors(['jam_masuk' => 'Anda masih memiliki peminjaman aktif yang belum selesai. Tunggu hingga peminjaman tersebut berakhir sebelum booking ruangan baru.'])->withInput();
         }
 
-        $validated['user_id'] = Auth::id();
-        $validated['ruangan_id'] = $ruangan_id;
-        $validated['status'] = 'aktif';
+        // Jika semua validasi lolos, cek status real-time sekali lagi
+        // untuk memastikan tidak ada race condition
+        if ($ruangan->getStatusRealTimeAttribute() !== 'tersedia') {
+            return back()->with('error', 'Maaf, ruangan baru saja di-booking oleh pengguna lain. Silakan refresh dan coba lagi.')->withInput();
+        }
 
-        Peminjaman::create($validated);
+        // Buat peminjaman baru dengan datetime columns saja (tidak perlu legacy)
+        $peminjaman = Peminjaman::create([
+            'user_id' => Auth::id(),
+            'ruangan_id' => $ruangan_id,
+            'dosen_pengampu' => $validated['dosen_pengampu'],
+            'tanggal_jam_masuk' => $tanggal_jam_masuk,
+            'tanggal_jam_keluar' => $tanggal_jam_keluar,
+            'status' => 'aktif',
+        ]);
 
-        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman ruangan berhasil dibuat');
+        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman ruangan berhasil dibuat. Status ruangan akan otomatis berubah menjadi "Tidak Tersedia" sejak jam masuk.');
     }
 
     public function myBookings(Request $request)
@@ -136,7 +170,11 @@ class PeminjamanController extends Controller
             'alasan_pembatalan' => $validated['alasan_pembatalan'],
         ]);
 
-        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman berhasil dibatalkan');
+        // Status ruangan akan secara otomatis berubah kembali menjadi tersedia
+        // karena status dihitung real-time berdasarkan peminjaman aktif
+
+        return redirect()->route('booking.my-bookings')->with('success', 'Peminjaman berhasil dibatalkan. Status ruangan akan otomatis kembali menjadi "Tersedia".');
     }
 }
+
 

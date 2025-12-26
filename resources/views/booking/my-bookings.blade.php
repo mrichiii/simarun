@@ -49,7 +49,7 @@
                                     <th>Jam Masuk</th>
                                     <th>Jam Keluar</th>
                                     <th>Dosen Pengampu</th>
-                                    <th>Status</th>
+                                    <th>Status Ruangan</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -58,18 +58,22 @@
                                     <tr>
                                         <td>
                                             <strong>{{ $item->ruangan->kode_ruangan }}</strong><br>
-                                            <small class="text-muted">{{ $item->ruangan->nama_ruangan }}</small>
                                         </td>
-                                        <td>{{ $item->jam_masuk }}</td>
-                                        <td>{{ $item->jam_keluar }}</td>
+                                        <td>{{ $item->tanggal_jam_masuk }}</td>
+                                        <td>{{ $item->tanggal_jam_keluar }}</td>
                                         <td>{{ $item->dosen_pengampu }}</td>
                                         <td>
-                                            @if($item->status === 'aktif')
-                                                <span class="badge bg-success">Aktif</span>
-                                            @elseif($item->status === 'selesai')
-                                                <span class="badge bg-secondary">Selesai</span>
+                                            @php
+                                                $realTimeStatus = $item->ruangan->status_real_time;
+                                            @endphp
+                                            @if($realTimeStatus === 'tersedia')
+                                                <span class="badge bg-success">Tersedia</span>
+                                            @elseif($realTimeStatus === 'tidak_tersedia')
+                                                <span class="badge bg-warning text-dark">Tidak Tersedia</span>
+                                            @elseif($realTimeStatus === 'tidak_dapat_dipakai')
+                                                <span class="badge bg-danger">Tidak Dapat Dipakai</span>
                                             @else
-                                                <span class="badge bg-danger">Dibatalkan</span>
+                                                <span class="badge bg-secondary">{{ $realTimeStatus }}</span>
                                             @endif
                                         </td>
                                         <td>

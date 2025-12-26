@@ -12,8 +12,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Auto-update status ruangan setiap menit
-        $schedule->command('app:auto-update-ruangan-status')->everyMinute();
+        // Auto-update peminjaman status dari 'aktif' menjadi 'selesai' setiap menit
+        // ketika waktu booking sudah berakhir
+        $schedule->command('peminjaman:auto-update-status')->everyMinute();
     }
 
     /**
@@ -22,6 +23,11 @@ class Kernel extends ConsoleKernel
     protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
+
+        // Register custom commands
+        $this->commands([
+            App\Console\Commands\AutoUpdatePeminjamanStatus::class,
+        ]);
 
         require base_path('routes/console.php');
     }

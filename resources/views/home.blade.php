@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIMARUN - Sistem Informasi Manajemen Ruangan</title>
+    <title>SIMARUN</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -22,7 +22,7 @@
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(12px);
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-            border-radius: 50px;
+            border-radius: 12px;
             border-bottom: 1px solid #e9ecef;
             display: flex; 
             position: sticky; 
@@ -277,14 +277,14 @@
             background: linear-gradient(135deg, #ffffff 0%, #f1f8f4 100%);
         }
         .room-card.available::before {
-            background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%);
+            background: linear-gradient(180deg, #2c7113 0%, #2e7d32 100%);
         }
         .room-card.used {
             border-color: #ffe0b2;
             background: linear-gradient(135deg, #ffffff 0%, #fff8ed 100%);
         }
-        .room-card.used::before {
-            background: linear-gradient(180deg, #ffa726 0%, #f57c00 100%);
+        .room-card.used::before {   
+            background: linear-gradient(180deg, #ffa200 0%, #d29201 100%);
         }
         .room-card:hover {
             transform: translateY(-4px);
@@ -345,11 +345,9 @@
         .feature-card:hover::before {
             transform: scaleX(1);
         }
-
         .feature-card:hover {
             box-shadow: 0 20px 40px rgba(44, 113, 19, 0.15);
         }
-
         .feature-icon {
             width: 80px;
             height: 80px;
@@ -362,25 +360,21 @@
             font-size: 2rem;
             color: #2c7113;
         }
-
         .feature-card:hover .feature-icon {
             background: linear-gradient(135deg, #2c7113, #224914);
             color: white;
         }
-
         .feature-title {
             font-size: 1.35rem;
             font-weight: 700;
             margin-bottom: 12px;
             color: #1a1a1a;
         }
-
         .feature-description {
             color: #666;
             line-height: 1.7;
             font-size: 0.95rem;
         }
-
         .flow-section {
             padding: 100px 0;
             min-height: 80vh;
@@ -388,7 +382,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .flow-section::before {
             content: '';
             position: absolute;
@@ -399,12 +392,10 @@
             top: -150px;
             left: -150px;
         }
-
         .flow-step {
             text-align: center;
             position: relative;
         }
-
         .flow-icon {
             width: 100px;
             height: 100px;
@@ -420,18 +411,15 @@
             color: white;
             transition: all 0.3s ease;
         }
-
         .flow-step:hover .flow-icon {
             transform: scale(1.15);
             background: rgba(255, 255, 255, 0.25);
         }
-
         .flow-label {
             font-weight: 700;
             color: white;
             font-size: 1.05rem;
         }
-
         .cta-section {
             padding: 100px 0;
             min-height: 95vh;
@@ -439,7 +427,6 @@
             text-align: center;
             position: relative;
         }
-
         .cta-card {
             max-width: 800px;
             margin: 0 auto;
@@ -449,7 +436,6 @@
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
             border: 1px solid #e0e0e0;
         }
-
         .cta-title {
             font-size: 2.5rem;
             font-weight: 800;
@@ -457,13 +443,11 @@
             color: #1a1a1a;
             letter-spacing: -1px;
         }
-
         .cta-description {
             font-size: 1.15rem;
             color: #666;
             margin-bottom: 40px;
         }
-
         .btn-cta {
             padding: 18px 48px;
             font-size: 1.1rem;
@@ -475,18 +459,15 @@
             transition: all 0.3s ease;
             box-shadow: 0 8px 25px rgba(44, 113, 19, 0.3);
         }
-
         .btn-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 12px 35px rgba(44, 113, 19, 0.4);
         }
-
         .footer {
             background: #1a1a1a;
             color: white;
             padding: 60px 0 30px;
         }
-
         .footer-brand {
             display: flex;
             align-items: center;
@@ -494,24 +475,20 @@
             justify-content: center;
             margin-bottom: 20px;
         }
-
         .footer-brand img {
             width: 44px;
             height: 44px;
             border-radius: 8px;
         }
-
         .footer-title {
             font-weight: 900;
             font-size: 1.5rem;
         }
-
         .footer-desc {
             color: #999;
             font-size: 0.95rem;
             margin-bottom: 30px;
         }
-
         .footer-bottom {
             border-top: 1px solid #333;
             padding-top: 20px;
@@ -519,43 +496,35 @@
             color: #777;
             font-size: 0.9rem;
         }
-
         .legend-item {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .legend-dot {
             width: 16px;
             height: 16px;
             border-radius: 4px;
             flex-shrink: 0;
         }
-
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
             }
-
             .hero-subtitle {
                 font-size: 1.1rem;
             }
-
             .section-title {
                 font-size: 2rem;
             }
-
             .room-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             }
-
             .flow-icon {
                 width: 70px;
                 height: 70px;
                 font-size: 1.5rem;
             }
-
             .cta-card {
                 padding: 40px 24px;
             }
@@ -568,13 +537,16 @@
         <div class="container">
             <a class="navbar-brand d-flex align-items-center" href="/" style="color: #000 !important; font-weight:700;">
                 <img src="{{ asset('logo1.png') }}" alt="SIMARUN" style="width: 44px; height: 44px; margin-right: 10px; vertical-align: middle; border-radius: 8px;">
-                <span style="vertical-align: middle;">SIMARUN</span>
+                <span class="navbar-brand-text fw-bold"
+                    style="vertical-align: middle; font-weight: 800; color: #2c7113; font-size: 1.8rem;">SIMARUN
+                </span>
+
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mx-auto align-items-lg-center gap-5" style="align-items: center;">
+                <ul class="navbar-nav mx-auto align-items-lg-center gap-5">
                     <li class="nav-item"><a class="nav-link nav-btn" href="#home" style="color:#0a0a0a;">Home</a></li>
                     <li class="nav-item"><a class="nav-link nav-btn" href="#features" style="color:#0a0a0a;">Fitur</a></li>
                     <li class="nav-item"><a class="nav-link nav-btn" href="#status" style="color:#0a0a0a;">Status</a></li>
@@ -726,7 +698,7 @@
                 @foreach($rooms ?? collect() as $r)
                     @php
                         $status = $r->status ?? ($r['status'] ?? 'unavailable');
-                        $statusClass = ($status === 'tersedia' || $status === 'available') ? 'available' : (($status === 'terpakai' || $status === 'used') ? 'used' : 'unavailable');
+                        $statusClass = ($status === 'tersedia' || $status === 'available') ? 'available' : (($status === 'terpakai' || $status === 'used') ? 'used' : 'used');
                         $label = ($status === 'tersedia' || $status === 'available') ? 'Tersedia' : (($status === 'terpakai' || $status === 'used') ? 'Terpakai' : 'Tidak Tersedia');
                         $code = $r->kode_ruangan ?? ($r['code'] ?? '—');
                     @endphp

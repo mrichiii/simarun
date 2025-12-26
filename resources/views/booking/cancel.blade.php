@@ -19,10 +19,10 @@
                         <strong>Ruangan:</strong> {{ $peminjaman->ruangan->kode_ruangan }} - {{ $peminjaman->ruangan->nama_ruangan }}
                     </div>
                     <div class="mb-2">
-                        <strong>Jam Masuk:</strong> {{ $peminjaman->jam_masuk }}
+                        <strong>Jam Masuk:</strong> {{ $peminjaman->tanggal_jam_masuk }}
                     </div>
                     <div class="mb-2">
-                        <strong>Jam Keluar:</strong> {{ $peminjaman->jam_keluar }}
+                        <strong>Jam Keluar:</strong> {{ $peminjaman->tanggal_jam_keluar }}
                     </div>
                     <div>
                         <strong>Dosen Pengampu:</strong> {{ $peminjaman->dosen_pengampu }}

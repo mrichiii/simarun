@@ -6,13 +6,28 @@ use Illuminate\Http\Request;
 use App\Models\Gedung;
 use App\Models\Lantai;
 use App\Models\Ruangan;
+use App\Models\Peminjaman;
+use Carbon\Carbon;
 
 class UserDashboardController extends Controller
 {
     public function index()
     {
         $gedung = Gedung::with('lantai.ruangan')->get();
-        $ruanganTersedia = Ruangan::where('status', 'tersedia')->count();
+        
+        // Hitung ruangan tersedia secara real-time menggunakan accessor
+        $now = Carbon::now(config('app.timezone'));
+        $ruanganTersedia = 0;
+
+        foreach ($gedung as $g) {
+            foreach ($g->lantai as $l) {
+                foreach ($l->ruangan as $r) {
+                    if ($r->getStatusRealTimeAttribute() === 'tersedia') {
+                        $ruanganTersedia++;
+                    }
+                }
+            }
+        }
 
         return view('dashboard.user', compact('gedung', 'ruanganTersedia'));
     }
@@ -27,9 +42,21 @@ class UserDashboardController extends Controller
 
     public function detailRuangan($ruangan_id)
     {
-        $ruangan = Ruangan::with('lantai.gedung', 'fasilitas')->findOrFail($ruangan_id);
+        $ruangan = Ruangan::with('lantai.gedung', 'fasilitas', 'peminjaman')->findOrFail($ruangan_id);
 
-        return view('user.ruangan-detail', compact('ruangan'));
+        // Ambil peminjaman yang sedang berlangsung sekarang
+        $now = Carbon::now(config('app.timezone'));
+        $currentPeminjaman = Peminjaman::where('ruangan_id', $ruangan_id)
+            ->where('status', 'aktif')
+            ->where('tanggal_jam_masuk', '<=', $now)
+            ->where('tanggal_jam_keluar', '>=', $now)
+            ->with('user')
+            ->first();
+
+        // Status real-time ruangan
+        $statusRealTime = $ruangan->getStatusRealTimeAttribute();
+
+        return view('user.ruangan-detail', compact('ruangan', 'currentPeminjaman', 'statusRealTime'));
     }
 }
 
