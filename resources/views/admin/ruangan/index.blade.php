@@ -46,7 +46,6 @@
             <select name="status" class="form-select">
                 <option value="">Semua Status</option>
                 <option value="tersedia" {{ request('status') == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                <option value="tidak_tersedia" {{ request('status') == 'tidak_tersedia' ? 'selected' : '' }}>Terpakai</option>
                 <option value="tidak_dapat_dipakai" {{ request('status') == 'tidak_dapat_dipakai' ? 'selected' : '' }}>Tidak Dapat Dipakai</option>
             </select>
         </div>
@@ -80,10 +79,11 @@
                             <td><strong>{{ $item->kode_ruangan }}</strong></td>
                             <td>{{ $item->nama_ruangan }}</td>
                             <td>
-                                <span class="status-badge status-{{ $item->status }}">
-                                    @if ($item->status === 'tersedia')
+                                @php $displayStatus = $item->status_real_time ?? $item->status; @endphp
+                                <span class="status-badge status-{{ $displayStatus }}">
+                                    @if ($displayStatus === 'tersedia')
                                         ✓ Tersedia
-                                    @elseif ($item->status === 'tidak_tersedia')
+                                    @elseif ($displayStatus === 'tidak_tersedia')
                                         ⚠ Terpakai
                                     @else
                                         ✗ Tidak Dapat Dipakai

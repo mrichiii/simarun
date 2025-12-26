@@ -9,6 +9,25 @@
         <a href="{{ route('gedung.index') }}" class="btn btn-primary" style="border: none;">
         <i class="fas fa-arrow-left me-2"></i>Kembali ke Gedung</a>
     </div>
+    {{-- Filter form --}}
+    <form method="GET" action="{{ route('admin.ruangan.index') }}" class="row g-2 mb-4">
+        <div class="col-md-6">
+            <input type="text" name="q" value="{{ request('q') }}" class="form-control" placeholder="Cari kode atau nama ruangan...">
+        </div>
+        <div class="col-md-6">
+            <select name="status" class="form-select">
+                <option value="">Semua Status</option>
+                <option value="tersedia" {{ request('status') == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
+                <option value="tidak_dapat_dipakai" {{ request('status') == 'tidak_dapat_dipakai' ? 'selected' : '' }}>Tidak Dapat Dipakai</option>
+            </select>
+        </div>
+        <div class="col-6 mb-2">
+            <button type="submit" class="btn btn-warning w-100">Filter</button>
+        </div>
+        <div class="col-6">
+            <a href="{{ route('admin.ruangan.index') }}" class="btn btn-secondary w-100">Reset</a>
+        </div>
+    </form>
 
     @if ($ruangan->isEmpty())
         <div class="card p-4 text-center text-muted">
@@ -35,8 +54,12 @@
                             <td>{{ $item->lantai->gedung->nama_gedung ?? 'N/A' }}</td>
                             <td>{{ $item->lantai->nomor_lantai }}</td>
                             <td>
-                                <span class="badge bg-{{ $item->status === 'tersedia' ? 'btn btn-primary' : ($item->status === 'tidak_tersedia' ? 'btn btn-warning' : 'btn btn-danger') }}">
-                                    {{ ucfirst(str_replace('_', ' ', $item->status)) }}
+                                @php $displayStatus = $item->status_real_time ?? $item->status; @endphp
+                                <span class="badge 
+                                    {{ $displayStatus === 'tersedia' ? 'bg-success text-white' : (
+                                        $displayStatus === 'tidak_tersedia' ? 'bg-warning text-dark' : 'bg-danger text-white'
+                                    ) }}">
+                                    {{ ucfirst(str_replace('_', ' ', $displayStatus)) }}
                                 </span>
                             </td>
                             <td>

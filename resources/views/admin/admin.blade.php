@@ -122,7 +122,8 @@
                 @else
                     <div class="grid-container">
                         @foreach ($allRuangan as $ruangan)
-                            <div class="grid-item {{ $ruangan->status }}" title="{{ $ruangan->kode_ruangan }} - {{ $ruangan->nama_ruangan }}">
+                            @php $displayStatus = $ruangan->status_real_time ?? $ruangan->status; @endphp
+                            <div class="grid-item {{ $displayStatus }}" title="{{ $ruangan->kode_ruangan }} - {{ $ruangan->nama_ruangan }}">
                                 {{ $ruangan->kode_ruangan }}
                             </div>
                         @endforeach

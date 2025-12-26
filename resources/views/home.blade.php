@@ -236,7 +236,7 @@
             font-weight: 900;
         }
         .status-section {
-            padding: 100px 0;
+            padding: 90px 0;
             border-top: 1px solid #e0e0e0;
             background: #ffffff;
         }
@@ -697,9 +697,10 @@
             <div class="room-grid">
                 @foreach($rooms ?? collect() as $r)
                     @php
-                        $status = $r->status ?? ($r['status'] ?? 'unavailable');
-                        $statusClass = ($status === 'tersedia' || $status === 'available') ? 'available' : (($status === 'terpakai' || $status === 'used') ? 'used' : 'used');
-                        $label = ($status === 'tersedia' || $status === 'available') ? 'Tersedia' : (($status === 'terpakai' || $status === 'used') ? 'Terpakai' : 'Tidak Tersedia');
+                        // Prefer real-time status if available on model
+                        $status = $r->status_real_time ?? $r->status ?? ($r['status'] ?? 'unavailable');
+                        $statusClass = ($status === 'tersedia' || $status === 'available') ? 'available' : (($status === 'tidak_tersedia' || $status === 'terpakai' || $status === 'used') ? 'used' : 'unavailable');
+                        $label = ($status === 'tersedia' || $status === 'available') ? 'Tersedia' : (($status === 'tidak_tersedia' || $status === 'terpakai' || $status === 'used') ? 'Terpakai' : 'Tidak Tersedia');
                         $code = $r->kode_ruangan ?? ($r['code'] ?? '—');
                     @endphp
                     <div class="room-card {{ $statusClass }}">
@@ -799,6 +800,7 @@
     <footer class="footer">
         <div class="container text-center">
             <div class="footer-brand">
+                <img src="{{ asset('logo.png') }}" alt="SIMARUN">
                 <img src="{{ asset('logo2.png') }}" alt="SIMARUN">
                 <div class="footer-title">SIMARUN</div>
             </div>

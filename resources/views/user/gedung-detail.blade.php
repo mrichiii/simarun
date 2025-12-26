@@ -70,7 +70,7 @@
                 @else
                     <div class="grid-container">
                         @foreach ($l->ruangan as $r)
-                            <a href="{{ route('user.ruangan-detail', $r->id) }}" class="grid-item {{ $r->status }}">
+                            <a href="{{ route('user.ruangan-detail', $r->id) }}" class="grid-item {{ $r->status_real_time }}">
                                 <div>
                                     <div style="font-size: 0.8rem;">{{ $r->kode_ruangan }}</div>
                                 </div>
