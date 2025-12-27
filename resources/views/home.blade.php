@@ -529,6 +529,10 @@
                 padding: 40px 24px;
             }
         }
+        .nav-item:hover {
+            background-color: #44ff002f !important;
+            border-radius: 12px;
+        }
     </style>
 </head>
 <body>
@@ -551,7 +555,7 @@
                     <li class="nav-item"><a class="nav-link nav-btn" href="#features" style="color:#0a0a0a;">Fitur</a></li>
                     <li class="nav-item"><a class="nav-link nav-btn" href="#status" style="color:#0a0a0a;">Status</a></li>
                     <li class="nav-item"><a class="nav-link nav-btn" href="#flow" style="color:#0a0a0a;">Alur</a></li>
-                    <li class="nav-item"><a class="nav-link nav-btn" href="#cta" style="color:#0a0a0a;">Masuk</a></li>
+                    <li class="nav-item"><a class="nav-link nav-btn fw-bold" href="#cta" style="background: linear-gradient(135deg, #2c7113, #224914); border-color: #224914; color: white; border-radius: 12px;">Masuk</a></li>
                 </ul>
                 <ul class="navbar-nav align-items-lg-center" style="align-items: center;">
                     <li class="nav-item">
